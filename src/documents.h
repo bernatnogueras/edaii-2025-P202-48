@@ -1,4 +1,11 @@
+#define DOCUMENTS_H
+
 #include <string.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <assert.h>
+
 #define N 
 
 /*
@@ -7,14 +14,17 @@
     3. Function to load a document from path
 */
 typedef struct{
-    int Id;
-    char title;
-    char body;
-    char links;
+    int id;
+    char title[100];
+    char *body;
 }Document;
 
+typedef struct{
+    char *links;
+}Links;
+
 Document *document_desserialize(char *path) {
-    FILE *f = fopen(path, "r");
+    FILE *f = fopen("0.txt", "r");
     assert(f != NULL);
     
     Document *document = (Document *)malloc(sizeof(Document));
@@ -24,7 +34,7 @@ Document *document_desserialize(char *path) {
     int bufferIdx = 0;
     char ch;
 
-    // parse id
+    // Analitzar id             
     while ((ch = fgetc(f)) != '\n') {
         assert(bufferIdx < bufferSize);
         buffer[bufferIdx++] = ch;
@@ -33,10 +43,10 @@ Document *document_desserialize(char *path) {
     buffer[bufferIdx++] = '\0';
     document->id = atoi(buffer);
 
-    // parse title
+    // Analitzar title
     // TODO
 
-    // parse body
+    // Analitzar body
     char linkBuffer[64];
     int linkBufferSize = 64;
     int linkBufferIdx = 0;
