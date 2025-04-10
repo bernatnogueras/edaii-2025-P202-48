@@ -9,7 +9,6 @@ void createaleak() {
   printf("Allocated leaking string: %s", foo);
 }
 
-
 typedef struct{
   int Id;
   char titol;
