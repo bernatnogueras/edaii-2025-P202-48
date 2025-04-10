@@ -9,6 +9,14 @@ void createaleak() {
   printf("Allocated leaking string: %s", foo);
 }
 
+
+typedef struct{
+  int Id;
+  char titol;
+  char cos;
+  char links;
+}Document;
+
 int main() {
   printf("*****************\nWelcome to EDA 2!\n*****************\n");
 
