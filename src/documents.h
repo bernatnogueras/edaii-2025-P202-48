@@ -1,75 +1,34 @@
-#include <string.h>
-#define N 
+#ifndef DOCUMENTS_H
+#define DOCUMENTS_H
+
+#include <stdbool.h>
+
+#define MAX_LINKS 1000
+
+//#include <string.h>
+//#define N
 
 /*
     1. Create document.h
     2. Define the Document Struct
     3. Function to load a document from path
 */
-typedef struct{
-    int Id;
-    char title;
-    char body;
-    char links;
-}Document;
 
-Document *document_desserialize(char *path) {
-    FILE *f = fopen(path, "r");
-    assert(f != NULL);
-    
-    Document *document = (Document *)malloc(sizeof(Document));
-    
-    char buffer[262144];
-    int bufferSize = 262144;
-    int bufferIdx = 0;
-    char ch;
+typedef struct {
+    int ids[MAX_LINKS];
+    int count;
+} Links;
 
-    // parse id
-    while ((ch = fgetc(f)) != '\n') {
-        assert(bufferIdx < bufferSize);
-        buffer[bufferIdx++] = ch;
-    }
-    assert(bufferIdx < bufferSize);
-    buffer[bufferIdx++] = '\0';
-    document->id = atoi(buffer);
+typedef struct {
+    int id;
+    char *title;
+    char *body;
+    Links *links;
+} Document;
 
-    // parse title
-    // TODO
 
-    // parse body
-    char linkBuffer[64];
-    int linkBufferSize = 64;
-    int linkBufferIdx = 0;
-    bool parsingLink = false;
-    Links *links = LinksInit();
-    
-    bufferIdx = 0;
-    while ((ch = fgetc(f)) != EOF) {
-        assert(bufferIdx < bufferSize);
-        buffer[bufferIdx++] = ch;
-        if (parsingLink) {
-            if (ch == ')') { // end of link
-                parsingLink = false;
-                assert(linkBufferIdx < linkBufferSize);
-                linkBuffer[linkBufferIdx++] = '\0';
-                int linkId = atoi(linkBuffer);
+Document *document_desserialize(char *path);
 
-                // TODO add to links
+Links *LinksInit(void);
 
-                linkBufferIdx = 0;
-            } else if (ch != '(') { // skip first parenthesis of the link
-                assert(linkBufferIdx < linkBufferSize);
-                linkBuffer[linkBufferIdx++] = ch;
-            } 
-        } else if (ch == ']') { // found beginning of link id, e.g.: [my link text](123)
-          parsingLink = true;
-        }
-    }
-    assert(bufferIdx < bufferSize);
-    buffer[bufferIdx++] = '\0';
-    
-    char *body = (char *)malloc(sizeof(char) * bufferIdx);
-    strcpy(body, buffer);
-
-    // TODO
-}
+#endif
