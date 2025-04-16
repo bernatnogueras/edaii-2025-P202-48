@@ -30,6 +30,7 @@ int main() {
         }
     }
 
+    //Crear una funcio que fagi aquests 4 free, posar-la a documents.c(codi) i a doc.h(la crido)   dir-li freeeDocument
     free(doc->title);
     free(doc->body);
     free(doc->links);
