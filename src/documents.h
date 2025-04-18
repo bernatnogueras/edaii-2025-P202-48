@@ -31,4 +31,5 @@ Document *document_desserialize(char *path);
 
 Links *LinksInit(void);
 
+void freeDocument(Document *doc);
 #endif

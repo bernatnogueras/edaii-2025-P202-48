@@ -12,29 +12,30 @@ void createaleak() {
 
 
 int main() {
+  
+    for(int i=0; i<=12; ++i){
+      char ruta[200];
+      sprintf(ruta, "datasets/wikipedia12/%d.txt", i);    //Ens permet anar actualitzant la ruta a cada iteració
 
-  Document *doc = document_desserialize("datasets/wikipedia12/0.txt");
-    if (doc == NULL) {
-        fprintf(stderr, "Error al carregar el document.\n");
-        return 1;
-    }
+      Document *doc = document_desserialize(ruta);
+      if (doc == NULL) {
+          fprintf(stderr, "Error al carregar el document.\n");
+          return 1;
+      }
 
-    printf("ID: %d\n", doc->id);
-    printf("Titol: %s\n", doc->title);
-    printf("Cos:\n%s\n", doc->body);
+      printf("ID: %d\n", doc->id);
+      printf("Titol: %s\n", doc->title);
+      printf("Cos:\n%s\n", doc->body);
 
-    if (doc->links != NULL) {
-        printf("Links (%d):\n", doc->links->count);
-        for (int i = 0; i < doc->links->count; i++) {
-            printf("  Link %d: %d\n", i + 1, doc->links->ids[i]);
-        }
-    }
-
-    //Crear una funcio que fagi aquests 4 free, posar-la a documents.c(codi) i a doc.h(la crido)   dir-li freeeDocument
-    free(doc->title);
-    free(doc->body);
-    free(doc->links);
-    free(doc);
+      if (doc->links != NULL) {
+          printf("Links (%d):\n", doc->links->count);
+          for (int i = 0; i < doc->links->count; i++) {
+              printf("  Link %d: %d\n", i + 1, doc->links->ids[i]);
+          }
+          printf("\n");
+      }
+      freeDocument(doc);    //Cridem la funció que allibera el document (títol, cos, links i document)
+    } 
 
   //printf("*****************\nWelcome to EDA 2!\n*****************\n");
 

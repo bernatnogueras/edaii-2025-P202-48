@@ -5,18 +5,20 @@
 #include "documents.h"
 
 
-Links *LinksInit(void) {
-  Links *links = (Links *)malloc(sizeof(Links));
-  assert(links != NULL);
-  links->count = 0;
-  return links;
+//Cada vegada que el codi detecti un link a la part del 'body', l'estructura de links s'anirà omplint dinàmicament
+Links *LinksInit(void) {        
+  Links *links = (Links *)malloc(sizeof(Links));        //Reservem memòria per a una estructura del tipus link
+  assert(links != NULL);        //Si el malloc falla, retorna NULL
+  links->count = 0;             //Inicialitza el contador de l'estructura a 0
+  return links;                 //Retorna el punter a l'estructura links
 }
 
+//'Desreialitzar'--> Convertir dades que estan guardades en un fitxer a una estructura de dades per a poder-les utilitzar
 Document *document_desserialize(char *path) {
-    FILE *f = fopen(path, "r");
-    assert(f != NULL);
+    FILE *f = fopen(path, "r");     //Llegim el fitxer
+    assert(f != NULL);              //Si no pot obrir el fitxer (perquè no existeix...) retornarà NULL
     
-    Document *document = (Document *)malloc(sizeof(Document));
+    Document *document = (Document *)malloc(sizeof(Document));      //Reservem memòria dinàmica per a l'estructura Document
     //assert(document != NULL);
 
     char buffer[262144];
@@ -24,7 +26,7 @@ Document *document_desserialize(char *path) {
     int bufferIdx = 0;
     char ch;
 
-    // parse id
+    // Llegeix/analitza l'id
     while ((ch = fgetc(f)) != '\n') {
         assert(bufferIdx < bufferSize);
         buffer[bufferIdx++] = ch;
@@ -33,7 +35,7 @@ Document *document_desserialize(char *path) {
     buffer[bufferIdx++] = '\0';
     document->id = atoi(buffer);
 
-    // parse title
+    // Llegeix/analitza el title
     bufferIdx = 0;
     while ((ch = fgetc(f)) != '\n' && ch != EOF) {
         assert(bufferIdx < bufferSize);
@@ -45,7 +47,7 @@ Document *document_desserialize(char *path) {
     assert(document->title != NULL);
     strcpy(document->title, buffer);
     
-    // parse body
+    // Llegeix/analitza el body
     char linkBuffer[64];
     int linkBufferSize = 64;
     int linkBufferIdx = 0;
@@ -88,6 +90,13 @@ Document *document_desserialize(char *path) {
     
     document->links = links;
 
-    fclose(f);
-    return document;
+    fclose(f);      //Tanca el fitxer
+    return document;        //Retorna el document
+}
+
+void freeDocument(Document *doc){      //Creem una funció que permet alliberar el document
+    free(doc->title);
+    free(doc->body);
+    free(doc->links);
+    free(doc);
 }
