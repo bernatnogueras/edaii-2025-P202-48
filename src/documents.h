@@ -5,8 +5,8 @@
 
 #define MAX_LINKS 1000
 
-//#include <string.h>
-//#define N
+// #include <string.h>
+// #define N
 
 /*
     1. Create document.h
@@ -15,17 +15,16 @@
 */
 
 typedef struct {
-    int ids[MAX_LINKS];
-    int count;
+  int ids[MAX_LINKS];
+  int count;
 } Links;
 
 typedef struct {
-    int id;
-    char *title;
-    char *body;
-    Links *links;
+  int id;
+  char *title;
+  char *body;
+  Links *links;
 } Document;
-
 
 Document *document_desserialize(char *path);
 
