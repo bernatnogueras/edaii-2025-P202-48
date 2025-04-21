@@ -8,12 +8,6 @@
 // #include <string.h>
 // #define N
 
-/*
-    1. Create document.h
-    2. Define the Document Struct
-    3. Function to load a document from path
-*/
-
 typedef struct {
   int ids[MAX_LINKS];
   int count;
@@ -29,6 +23,6 @@ typedef struct {
 Document *document_desserialize(char *path);
 
 Links *LinksInit(void);
-
+//Document **load_docs(int num_docs);
 void freeDocument(Document *doc);
 #endif

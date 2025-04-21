@@ -15,7 +15,7 @@ Links *LinksInit(void) {
 }
 
 //'Desreialitzar'--> Convertir dades que estan guardades en un fitxer a una
-//estructura de dades per a poder-les utilitzar
+// estructura de dades per a poder-les utilitzar
 Document *document_desserialize(char *path) {
   FILE *f = fopen(path, "r"); // Llegim el fitxer
   assert(
@@ -99,6 +99,59 @@ Document *document_desserialize(char *path) {
   fclose(f);       // Tanca el fitxer
   return document; // Retorna el document
 }
+
+// Creem una funció que retorna una llista de documents
+/*char load_doc() {
+  //char *llista = (char *)malloc(sizeof(char));
+  for (int i = 0; i <= 12; ++i) {
+    char ruta[200];
+    sprintf(ruta, "datasets/wikipedia12/%d.txt",
+            i); // Ens permet anar actualitzant la ruta a cada iteració
+
+    Document *doc = document_desserialize(ruta);
+    if (doc == NULL) {
+      fprintf(stderr, "Error al carregar el document.\n");
+      return 1;
+    }
+
+    printf("ID: %d\n", doc->id);
+    printf("Titol: %s\n", doc->title);
+    printf("Cos:\n%s\n", doc->body);
+
+    if (doc->links != NULL) {
+      printf("Links (%d):\n", doc->links->count);
+      for (int i = 0; i < doc->links->count; i++) {
+        printf("  Link %d: %d\n", i + 1, doc->links->ids[i]);
+      }
+      printf("\n");
+    }
+    freeDocument(doc); // Cridem la funció que allibera el document (títol, cos,
+                       // links i document)
+  }
+}*/
+/*
+Document **load_docs(int num_docs) {
+    Document **llista = malloc(sizeof(Document *) * num_docs);
+    if (llista == NULL) {
+        fprintf(stderr, "Error al reservar memòria per als documents.\n");
+        return NULL;
+    }
+    for (int i = 0; i < num_docs; ++i) {
+        char ruta[200];
+        sprintf(ruta, "datasets/wikipedia12/%d.txt", i);
+        Document *doc = document_desserialize(ruta);
+        if (doc == NULL) {
+            fprintf(stderr, "Error al carregar el document %d.\n", i);
+            for (int j = 0; j < i; ++j) {
+                freeDocument(llista[j]);
+            }
+            free(llista);
+            return NULL;
+        }
+        llista[i] = doc;
+    }
+    return llista;
+}*/
 
 void freeDocument(
     Document *doc) { // Creem una funció que permet alliberar el document

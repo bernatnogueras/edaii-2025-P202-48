@@ -11,7 +11,9 @@ void createaleak() {
 }
 
 int main() {
-
+  //int num_docs = 13;
+  //Document **doc = load_docs(num_docs);
+  
   for (int i = 0; i <= 12; ++i) {
     char ruta[200];
     sprintf(ruta, "datasets/wikipedia12/%d.txt",
@@ -37,6 +39,7 @@ int main() {
     freeDocument(doc); // Cridem la funció que allibera el document (títol, cos,
                        // links i document)
   }
+  
 
   // printf("*****************\nWelcome to EDA 2!\n*****************\n");
 
