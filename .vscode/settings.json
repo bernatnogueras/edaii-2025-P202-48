@@ -1,3 +1,6 @@
 {
     "files.eol": "\n",
+    "files.associations": {
+        "documents.h": "c"
+    },
 }

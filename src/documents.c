@@ -102,10 +102,10 @@ Document *document_desserialize(char *path) {
 
 // Creem una funció que retorna una llista de documents
 Document **loadAllDocuments(void) {
-  char *folders[] = {"wikipedia12","wikipedia270","wikipedia540","wikipedia5400"};
-  int counts[] = {12, 270, 540, 5400};
+  char *folders[] = {"wikipedia12"};      //char *folders[] = {"wikipedia12","wikipedia270","wikipedia540","wikipedia5400"};
+  int counts[] = {12};                    //int counts[] = {12, 270, 540, 5400};
   int numFolders = sizeof(counts) / sizeof(counts[0]);
-  int TOTAL_DOCS = 6222;
+  int TOTAL_DOCS = 12;                    //int TOTAL_DOCS = 6222;
 
   // Reservem l'array de punters
   Document **docs = malloc(sizeof(Document *) * TOTAL_DOCS);
@@ -116,13 +116,11 @@ Document **loadAllDocuments(void) {
 
   for (int f = 0; f < numFolders; ++f) {
       for (int j = 0; j < counts[f]; ++j) {
-          // Construir la ruta relativa des d'on s'executarà el binari
           sprintf(path, "datasets/%s/%d.txt", folders[f], j);
 
           Document *doc = document_desserialize(path);
           if (!doc) {
               fprintf(stderr, "Error carregant '%s'\n", path);
-              // Alliberar els ja carregats abans d'abortar
               for (int k = 0; k < idx; ++k)
                   freeDocument(docs[k]);
               free(docs);
@@ -132,7 +130,6 @@ Document **loadAllDocuments(void) {
       }
   }
 
-  // idx hauria de ser TOTAL_DOCS
   assert(idx == TOTAL_DOCS && "Carregats menys documents dels esperats");
 
   return docs;

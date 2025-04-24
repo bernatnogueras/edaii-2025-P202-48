@@ -15,8 +15,10 @@ int main() {
   if (allDocs == NULL) {
     return 1;
   }
+  
+  printf("******* recent searches ********\n\nSearch: ");
 
-  freeAllDocuments(allDocs, 6222);
+  freeAllDocuments(allDocs, 12);                  //freeAllDocuments(allDocs, 6222);
 
   printf("Done\n");
 

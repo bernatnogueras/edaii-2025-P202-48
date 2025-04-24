@@ -5,7 +5,7 @@
 
 #define MAX_LINKS 1000
 
-#define TOTAL_DOCUMENTS 6222
+#define TOTAL_DOCUMENTS 12          //#define TOTAL_DOCUMENTS 6222
 
 typedef struct {
   int ids[MAX_LINKS];
