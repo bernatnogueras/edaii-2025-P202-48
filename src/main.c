@@ -11,35 +11,14 @@ void createaleak() {
 }
 
 int main() {
-  //int num_docs = 13;
-  //Document **doc = load_docs(num_docs);
-  
-  for (int i = 0; i <= 12; ++i) {
-    char ruta[200];
-    sprintf(ruta, "datasets/wikipedia12/%d.txt",
-            i); // Ens permet anar actualitzant la ruta a cada iteració
-
-    Document *doc = document_desserialize(ruta);
-    if (doc == NULL) {
-      fprintf(stderr, "Error al carregar el document.\n");
-      return 1;
-    }
-
-    printf("ID: %d\n", doc->id);
-    printf("Titol: %s\n", doc->title);
-    printf("Cos:\n%s\n", doc->body);
-
-    if (doc->links != NULL) {
-      printf("Links (%d):\n", doc->links->count);
-      for (int i = 0; i < doc->links->count; i++) {
-        printf("  Link %d: %d\n", i + 1, doc->links->ids[i]);
-      }
-      printf("\n");
-    }
-    freeDocument(doc); // Cridem la funció que allibera el document (títol, cos,
-                       // links i document)
+  Document **allDocs = loadAllDocuments();
+  if (allDocs == NULL) {
+    return 1;
   }
-  
+
+  freeAllDocuments(allDocs, 6222);
+
+  printf("Done\n");
 
   // printf("*****************\nWelcome to EDA 2!\n*****************\n");
 

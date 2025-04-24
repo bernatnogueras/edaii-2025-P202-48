@@ -87,8 +87,8 @@ Document *document_desserialize(char *path) {
   assert(bufferIdx < bufferSize);
   buffer[bufferIdx++] = '\0';
 
-  char *body = (char *)malloc(sizeof(char) * bufferIdx);
-  strcpy(body, buffer);
+  //char *body = (char *)malloc(sizeof(char) * bufferIdx);
+  //strcpy(body, buffer);
 
   document->body = (char *)malloc(sizeof(char) * (bufferIdx + 1));
   assert(document->body != NULL);
@@ -101,57 +101,43 @@ Document *document_desserialize(char *path) {
 }
 
 // Creem una funció que retorna una llista de documents
-/*char load_doc() {
-  //char *llista = (char *)malloc(sizeof(char));
-  for (int i = 0; i <= 12; ++i) {
-    char ruta[200];
-    sprintf(ruta, "datasets/wikipedia12/%d.txt",
-            i); // Ens permet anar actualitzant la ruta a cada iteració
+Document **loadAllDocuments(void) {
+  char *folders[] = {"wikipedia12","wikipedia270","wikipedia540","wikipedia5400"};
+  int counts[] = {12, 270, 540, 5400};
+  int numFolders = sizeof(counts) / sizeof(counts[0]);
+  int TOTAL_DOCS = 6222;
 
-    Document *doc = document_desserialize(ruta);
-    if (doc == NULL) {
-      fprintf(stderr, "Error al carregar el document.\n");
-      return 1;
-    }
+  // Reservem l'array de punters
+  Document **docs = malloc(sizeof(Document *) * TOTAL_DOCS);
+  assert(docs != NULL && "No s'ha pogut reservar memòria pels docs");
 
-    printf("ID: %d\n", doc->id);
-    printf("Titol: %s\n", doc->title);
-    printf("Cos:\n%s\n", doc->body);
+  int idx = 0;
+  char path[256];
 
-    if (doc->links != NULL) {
-      printf("Links (%d):\n", doc->links->count);
-      for (int i = 0; i < doc->links->count; i++) {
-        printf("  Link %d: %d\n", i + 1, doc->links->ids[i]);
+  for (int f = 0; f < numFolders; ++f) {
+      for (int j = 0; j < counts[f]; ++j) {
+          // Construir la ruta relativa des d'on s'executarà el binari
+          sprintf(path, "datasets/%s/%d.txt", folders[f], j);
+
+          Document *doc = document_desserialize(path);
+          if (!doc) {
+              fprintf(stderr, "Error carregant '%s'\n", path);
+              // Alliberar els ja carregats abans d'abortar
+              for (int k = 0; k < idx; ++k)
+                  freeDocument(docs[k]);
+              free(docs);
+              return NULL;
+          }
+          docs[idx++] = doc;
       }
-      printf("\n");
-    }
-    freeDocument(doc); // Cridem la funció que allibera el document (títol, cos,
-                       // links i document)
   }
-}*/
-/*
-Document **load_docs(int num_docs) {
-    Document **llista = malloc(sizeof(Document *) * num_docs);
-    if (llista == NULL) {
-        fprintf(stderr, "Error al reservar memòria per als documents.\n");
-        return NULL;
-    }
-    for (int i = 0; i < num_docs; ++i) {
-        char ruta[200];
-        sprintf(ruta, "datasets/wikipedia12/%d.txt", i);
-        Document *doc = document_desserialize(ruta);
-        if (doc == NULL) {
-            fprintf(stderr, "Error al carregar el document %d.\n", i);
-            for (int j = 0; j < i; ++j) {
-                freeDocument(llista[j]);
-            }
-            free(llista);
-            return NULL;
-        }
-        llista[i] = doc;
-    }
-    return llista;
-}*/
+
+  // idx hauria de ser TOTAL_DOCS
+  assert(idx == TOTAL_DOCS && "Carregats menys documents dels esperats");
+
+  return docs;
+}
+
 
 void freeDocument(
     Document *doc) { // Creem una funció que permet alliberar el document
@@ -159,4 +145,16 @@ void freeDocument(
   free(doc->body);
   free(doc->links);
   free(doc);
+}
+
+
+void freeAllDocuments(Document **allDocs, int totalDocs) {
+  if (allDocs == NULL) return;
+
+  for (int i = 0; i < totalDocs; ++i) {
+    if (allDocs[i] != NULL) {
+      freeDocument(allDocs[i]);
+    }
+  }
+  free(allDocs);
 }

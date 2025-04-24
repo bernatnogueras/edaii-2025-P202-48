@@ -5,8 +5,7 @@
 
 #define MAX_LINKS 1000
 
-// #include <string.h>
-// #define N
+#define TOTAL_DOCUMENTS 6222
 
 typedef struct {
   int ids[MAX_LINKS];
@@ -21,8 +20,9 @@ typedef struct {
 } Document;
 
 Document *document_desserialize(char *path);
-
+Document **loadAllDocuments(void);
 Links *LinksInit(void);
-//Document **load_docs(int num_docs);
 void freeDocument(Document *doc);
+void freeAllDocuments(Document **allDocs, int totalDocs);
+
 #endif
