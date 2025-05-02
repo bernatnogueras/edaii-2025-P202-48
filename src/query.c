@@ -4,14 +4,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Creem una funció que crea i inicialitza una estructura del tipus query
 Query *Query_init(const char *line) {
-  Query *q = malloc(sizeof(Query));
+  Query *q = malloc(sizeof(Query)); // Reservem memòria dinàmica
   if (!q)
     return NULL;
-  q->head = NULL;
+  q->head = NULL; // Inicialitzem l'inici i el contador
   q->count = 0;
 
-  // Fem una còpia de la línia
+  // Fem una còpia de la línia introduïda per a poder-la modificar
   char *copy = malloc(strlen(line) + 1);
   if (!copy) {
     free(q);
@@ -30,14 +31,21 @@ Query *Query_init(const char *line) {
     if (!*p)
       break;
 
-    // Inici de la paraula
+    // Detectem si és una paraula exclosa
+    bool exclude = false;
+    if (*p == '-') {
+      exclude = true;
+      p++; // Saltem el guió '-'
+    }
+
+    // Detecta on comença i acaba la paraula i la seva mida
     char *start = p;
     while (*p && *p != ' ' && *p != '\t' && *p != '\n') {
       p++;
     }
     size_t len = p - start;
 
-    // Copiem la paraula a la nova cadena
+    // Copiem la parula a la nova cadena
     char *word = malloc(len + 1);
     if (!word) {
       // Si dona error, alliberem memòria i sortim
@@ -48,7 +56,7 @@ Query *Query_init(const char *line) {
     strncpy(word, start, len);
     word[len] = '\0';
 
-    // Creem el node i l'enllacem
+    // Creem un QueryNode per guardar la paraula i l'enllaça a la llista
     QueryNode *node = malloc(sizeof(QueryNode));
     if (!node) {
       free(word);
@@ -57,6 +65,7 @@ Query *Query_init(const char *line) {
       return NULL;
     }
     node->keyword = word;
+    node->exclude = exclude;
     node->next = NULL;
     *pp = node;
     pp = &node->next;
@@ -67,6 +76,7 @@ Query *Query_init(const char *line) {
   return q;
 }
 
+// Fucnió que allibera tota la memòria d'una estrcutura Query
 void Query_free(Query *q) {
   QueryNode *curr = q->head;
   while (curr) {
@@ -78,13 +88,26 @@ void Query_free(Query *q) {
   free(q);
 }
 
+// Funció que retorna true si conté les paraules obligatòries i no conté cap
+// paraula exclosa
 bool document_matches(const Document *doc, const Query *q) {
   if (!q || q->count == 0)
     return false;
   for (QueryNode *n = q->head; n; n = n->next) {
-    if (!strstr(doc->body, n->keyword) && !strstr(doc->title, n->keyword)) {
-      return false;
+    bool actual =
+        strstr(doc->body, n->keyword) || strstr(doc->title, n->keyword);
+
+    // Si hi ha una paraula que ha d'estar exclosa, retornem fals
+    if (n->exclude) {
+      if (actual)
+        return false;
+    }
+    // Si no apareix una paraula obligatòria, retornem fals
+    else {
+      if (!actual)
+        return false;
     }
   }
+  // Si no és una paraula exclosa i és obligatòria i apareix, retornem true
   return true;
 }

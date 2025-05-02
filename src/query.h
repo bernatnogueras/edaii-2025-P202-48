@@ -6,6 +6,7 @@
 
 typedef struct QueryNode {
   char *keyword;
+  bool exclude; // Ens indicarà si la paraula s'ha d'excloure
   struct QueryNode *next;
 } QueryNode;
 
