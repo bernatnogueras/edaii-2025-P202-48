@@ -11,7 +11,7 @@ Query *Query_init(const char *line) {
     q->head = NULL;
     q->count = 0;
 
-    // Hacemos copia mutable de la línea
+    //Fem una còpia de la línia
     char *copy = malloc(strlen(line) + 1);
     if (!copy) {
         free(q);
@@ -23,23 +23,23 @@ Query *Query_init(const char *line) {
     QueryNode **pp = &q->head;
 
     while (*p) {
-        // Saltar espacios, tabuladores y saltos de línea
+        //Saltem els espais, salts de línia i tabuladors
         while (*p && (*p == ' ' || *p == '\t' || *p == '\n')) {
             p++;
         }
         if (!*p) break;
 
-        // Inicio de la palabra
+        //Inici de la paraula
         char *start = p;
         while (*p && *p != ' ' && *p != '\t' && *p != '\n') {
             p++;
         }
         size_t len = p - start;
 
-        // Copiamos la palabra en una nueva cadena
+        //Copiem la paraula a la nova cadena
         char *word = malloc(len + 1);
         if (!word) {
-            // En caso de error, liberamos y salimos
+            //Si dona error, alliberem memòria i sortim
             Query_free(q);
             free(copy);
             return NULL;
@@ -47,7 +47,7 @@ Query *Query_init(const char *line) {
         strncpy(word, start, len);
         word[len] = '\0';
 
-        // Creamos nodo y lo enlazamos
+        //Creem el node i l'enllacem
         QueryNode *node = malloc(sizeof(QueryNode));
         if (!node) {
             free(word);
