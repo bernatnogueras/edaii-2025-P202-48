@@ -87,8 +87,8 @@ Document *document_desserialize(char *path) {
   assert(bufferIdx < bufferSize);
   buffer[bufferIdx++] = '\0';
 
-  //char *body = (char *)malloc(sizeof(char) * bufferIdx);
-  //strcpy(body, buffer);
+  // char *body = (char *)malloc(sizeof(char) * bufferIdx);
+  // strcpy(body, buffer);
 
   document->body = (char *)malloc(sizeof(char) * (bufferIdx + 1));
   assert(document->body != NULL);
@@ -102,10 +102,12 @@ Document *document_desserialize(char *path) {
 
 // Creem una funció que retorna una llista de documents
 Document **loadAllDocuments(void) {
-  char *folders[] = {"wikipedia12"};      //char *folders[] = {"wikipedia12","wikipedia270","wikipedia540","wikipedia5400"};
-  int counts[] = {13};                    //int counts[] = {12, 270, 540, 5400};
+  char *folders[] = {
+      "wikipedia12"}; // char *folders[] =
+                      // {"wikipedia12","wikipedia270","wikipedia540","wikipedia5400"};
+  int counts[] = {13}; // int counts[] = {12, 270, 540, 5400};
   int numFolders = sizeof(counts) / sizeof(counts[0]);
-  int TOTAL_DOCS = 13;                    //int TOTAL_DOCS = 6222;
+  int TOTAL_DOCS = 13; // int TOTAL_DOCS = 6222;
 
   // Reservem l'array de punters
   Document **docs = malloc(sizeof(Document *) * TOTAL_DOCS);
@@ -115,26 +117,25 @@ Document **loadAllDocuments(void) {
   char path[256];
 
   for (int f = 0; f < numFolders; ++f) {
-      for (int j = 0; j < counts[f]; ++j) {
-          sprintf(path, "datasets/%s/%d.txt", folders[f], j);
+    for (int j = 0; j < counts[f]; ++j) {
+      sprintf(path, "datasets/%s/%d.txt", folders[f], j);
 
-          Document *doc = document_desserialize(path);
-          if (!doc) {
-              fprintf(stderr, "Error carregant '%s'\n", path);
-              for (int k = 0; k < idx; ++k)
-                  freeDocument(docs[k]);
-              free(docs);
-              return NULL;
-          }
-          docs[idx++] = doc;
+      Document *doc = document_desserialize(path);
+      if (!doc) {
+        fprintf(stderr, "Error carregant '%s'\n", path);
+        for (int k = 0; k < idx; ++k)
+          freeDocument(docs[k]);
+        free(docs);
+        return NULL;
       }
+      docs[idx++] = doc;
+    }
   }
 
   assert(idx == TOTAL_DOCS && "Carregats menys documents dels esperats");
 
   return docs;
 }
-
 
 void freeDocument(
     Document *doc) { // Creem una funció que permet alliberar el document
@@ -144,9 +145,9 @@ void freeDocument(
   free(doc);
 }
 
-
 void freeAllDocuments(Document **allDocs, int totalDocs) {
-  if (allDocs == NULL) return;
+  if (allDocs == NULL)
+    return;
 
   for (int i = 0; i < totalDocs; ++i) {
     if (allDocs[i] != NULL) {
