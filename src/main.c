@@ -1,4 +1,5 @@
 #include "documents.h"
+#include "query.h"
 #include "sample_lib.h"
 #include <dirent.h>
 #include <stdio.h>
@@ -16,11 +17,44 @@ int main() {
     return 1;
   }
   
-  printf("******* recent searches ********\n\nSearch: ");
+  //printf("******* recent searches ********\n\nSearch: ");
 
-  freeAllDocuments(allDocs, 12);                  //freeAllDocuments(allDocs, 6222);
 
-  printf("Done\n");
+  const int totalDocs = 13;
+  // 2. Leemos las keywords de la entrada estándar
+  char input[1024];
+  printf("Introdueix paraules clau separades por espais: ");
+  if (scanf(" %[^\n]", input) != 1) {
+    fprintf(stderr, "Error llegint l'entrada\n");
+    freeAllDocuments(allDocs, totalDocs);
+    return 1;
+  }
+
+  // 3. Inicializamos la Query
+  Query *q = Query_init(input);
+  if (!q) {
+    fprintf(stderr, "Error inicialitzant la query\n");
+    freeAllDocuments(allDocs, totalDocs);
+    return 1;
+  }
+
+  // 4. Recorremos y comprobamos cada documento
+  for (int i = 0; i < totalDocs; ++i) {
+    if (document_matches(allDocs[i], q)) {
+      printf("\"%s\" SÍ coincideix\n", allDocs[i]->title);
+    } else {
+      printf("\"%s\" NO coincideix\n", allDocs[i]->title);
+    }
+  }
+
+  // 5. Liberamos memoria
+  Query_free(q);
+  freeAllDocuments(allDocs, totalDocs);
+
+
+  //freeAllDocuments(allDocs, 12);                  //freeAllDocuments(allDocs, 6222);
+
+  //printf("Done\n");
 
   // printf("*****************\nWelcome to EDA 2!\n*****************\n");
 

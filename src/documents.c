@@ -103,9 +103,9 @@ Document *document_desserialize(char *path) {
 // Creem una funció que retorna una llista de documents
 Document **loadAllDocuments(void) {
   char *folders[] = {"wikipedia12"};      //char *folders[] = {"wikipedia12","wikipedia270","wikipedia540","wikipedia5400"};
-  int counts[] = {12};                    //int counts[] = {12, 270, 540, 5400};
+  int counts[] = {13};                    //int counts[] = {12, 270, 540, 5400};
   int numFolders = sizeof(counts) / sizeof(counts[0]);
-  int TOTAL_DOCS = 12;                    //int TOTAL_DOCS = 6222;
+  int TOTAL_DOCS = 13;                    //int TOTAL_DOCS = 6222;
 
   // Reservem l'array de punters
   Document **docs = malloc(sizeof(Document *) * TOTAL_DOCS);
