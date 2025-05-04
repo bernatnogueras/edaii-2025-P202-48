@@ -43,6 +43,10 @@ int main() {
     }
   }
 
+  //////////////
+  //
+  query_queue(q);
+
   // Alliberem memòria
   Query_free(q);
   freeAllDocuments(allDocs, totalDocs);

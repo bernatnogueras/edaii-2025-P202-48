@@ -111,3 +111,38 @@ bool document_matches(const Document *doc, const Query *q) {
   // Si no és una paraula exclosa i és obligatòria i apareix, retornem true
   return true;
 }
+
+// /*
+// Show the last 3 queries using a queue
+void query_queue(Query *q) {
+  // Inicialitzem la cua a NULL
+  static Query *queue[3] = {NULL, NULL, NULL};
+  static int count = 0;
+
+  // Creem un bucle per desplaçar tots els elements de la cua una posició
+  // endarrera
+  for (int i = count; i > 0; --i) {
+    queue[i] = queue[i - 1];
+  }
+  // Introduïm el nou element al primer element de la cua, ja que és el més
+  // recent
+  queue[0] = q;
+  // Incrementem el contador
+  if (count < 3) {
+    count++;
+  }
+
+  printf("L'historial de les últimes consultes és:\n");
+  for (int i = 0; i < count; ++i) {
+    printf("·Query %d: ", i + 1);
+    for (QueryNode *n = queue[i]->head; n; n = n->next) {
+      if (n->exclude) {
+        printf("-%s ", n->keyword);
+      } else {
+        printf("%s ", n->keyword);
+      }
+    }
+    printf("\n");
+  }
+}
+//*/
