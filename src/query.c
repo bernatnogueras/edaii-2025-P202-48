@@ -154,3 +154,14 @@ void query_queue_clear(void) {
   }
   count = 0;
 }
+
+
+void searchDocumentLineal(Document **allDocs, int totalDocs, const Query *q) {
+  for (int i = 0; i < totalDocs; ++i) {
+    if (document_matches(allDocs[i], q)) {
+      printf("\"%s\" SÍ coincideix\n", allDocs[i]->title);
+    } else {
+      printf("\"%s\" NO coincideix\n", allDocs[i]->title);
+    }
+  }
+}

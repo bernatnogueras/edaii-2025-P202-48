@@ -22,7 +22,7 @@ int main() {
   char input[1024];
 
   while(1) {
-    printf("Introdueix paraules clau separades por espais: ");
+    printf("Search: ");
     if (!fgets(input, sizeof(input), stdin)) {
       fprintf(stderr, "Error llegint l'entrada\n");
       break;
@@ -45,14 +45,7 @@ int main() {
       break;
     }
 
-    for (int i = 0; i < totalDocs; ++i) {
-      if (document_matches(allDocs[i], q)) {
-        printf("\"%s\" SÍ coincideix\n", allDocs[i]->title);
-      } else {
-        printf("\"%s\" NO coincideix\n", allDocs[i]->title);
-      }
-    }
-
+    searchDocumentLineal(allDocs, totalDocs, q);
     printf("\n");
     query_queue(q);
   }
