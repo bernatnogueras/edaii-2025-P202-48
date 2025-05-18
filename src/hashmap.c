@@ -1,7 +1,11 @@
-#include "hashmap.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include "hashmap.h"
+#include "docIdList.h"
+#include <string.h>
+
+
 
 
 // Hash function for strings
@@ -79,4 +83,53 @@ void *HashMap_get(HashMap *map, const char *key) {
     node = node->next;
   }
   return NULL;
+}
+static void normalize_word(char *word) {
+  size_t len = strlen(word);
+  size_t idx = 0;
+  for (size_t i = 0; i < len; i++) {
+      if (isalpha((unsigned char)word[i])) {
+          word[idx++] = tolower((unsigned char)word[i]);
+      }
+  }
+  word[idx] = '\0';
+}
+
+void add_words_to_reverse_index(HashMap *reverseIndex, void **docs, int totalDocs) {
+  for (int i = 0; i < totalDocs; i++) {
+      typedef struct Document {
+          int id;
+          char *title;
+          char *body;
+          void *links;
+      } Document;
+
+      Document *doc = (Document *)docs[i];
+      char *text = doc->body;
+
+      char *copy = strdup(text);
+      if (!copy) continue;
+
+      char *token = strtok(copy, " \t\n\r.,;:!?\"()[]{}<>");
+
+      while (token != NULL) {
+          normalize_word(token);
+          if (strlen(token) > 0) {
+              DocIdList*list = (DocIdList *)HashMap_get(reverseIndex, token);
+
+              if (!list) {
+                  list = DocIdList_create();
+                  if (!list) {
+                      free(copy);
+                      return;
+                  }
+                  HashMap_put(reverseIndex, token, list);
+              }
+
+              DocIdList_add(list, doc->id);
+          }
+          token = strtok(NULL, " \t\n\r.,;:!?\"()[]{}<>");
+      }
+      free(copy);
+  }
 }
