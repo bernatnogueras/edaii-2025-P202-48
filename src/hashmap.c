@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdint.h>
 #include "hashmap.h"
+#include <ctype.h>
 #include "docIdList.h"
 #include <string.h>
 
