@@ -129,7 +129,7 @@ void query_queue(Query *q) {
   // Introduïm el nou element al primer element de la cua, ja que és el més
   // recent
   queue[0] = q;
-  count++;  // Incrementem el contador
+  count++; // Incrementem el contador
 
   printf("L'historial de les últimes consultes és:\n");
   for (int i = 0; i < count; ++i) {
@@ -146,15 +146,13 @@ void query_queue(Query *q) {
   printf("\n");
 }
 
-
 void query_queue_clear(void) {
   for (int i = 0; i < count; ++i) {
-      Query_free(queue[i]);
-      queue[i] = NULL;
+    Query_free(queue[i]);
+    queue[i] = NULL;
   }
   count = 0;
 }
-
 
 void searchDocumentLineal(Document **allDocs, int totalDocs, const Query *q) {
   for (int i = 0; i < totalDocs; ++i) {

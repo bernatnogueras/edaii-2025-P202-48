@@ -1,31 +1,31 @@
 #ifndef HASHMAP_H
 #define HASHMAP_H
-#include <stddef.h>
 #include "docIdList.h"
+#include <stddef.h>
 
-
-// Chains to generic values map (void*)
+// Cadena d'elements a un hashmap de valors genèrics (void*)
 typedef struct HashNode {
   char *key;
   void *value;
   struct HashNode *next;
 } HashNode;
-    
+
 typedef struct HashMap {
   size_t bucket_count;
   HashNode **buckets;
 } HashMap;
 
-// Create a hashmap with bucket_count buckets
+// Crea un hashmap amb bucket_count compartiments
 HashMap *HashMap_create(size_t bucket_count);
-// Free hashmap, no keys/values
+
+// Allibera el hashmap, però no les claus ni els valors
 void HashMap_free(HashMap *map);
 
-// Insert (key, value) in the map (chaining). Clones key.
+// Insereix (clau,valor) al hashmap i clona la clau
 int HashMap_put(HashMap *map, const char *key, void *value);
-// Returns value associated to key, or NULL if it doesn't exist
-void *HashMap_get(HashMap *map, const char *key);
-void *HashMap_get(HashMap *map, const char *key);
 
+// Retorna el valor associat a la clau o NULL si no existeix
+void *HashMap_get(HashMap *map, const char *key);
+void *HashMap_get(HashMap *map, const char *key);
 
 #endif

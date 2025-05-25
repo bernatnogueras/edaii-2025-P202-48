@@ -1,17 +1,13 @@
+#include "hashmap.h"
+#include "docIdList.h"
+#include <ctype.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdint.h>
-#include "hashmap.h"
-#include <ctype.h>
-#include "docIdList.h"
-#include <string.h>
 
-
-
-
-// Hash function for strings
-static uint64_t hash_fn(const char *s) {
-  uint64_t h = 5381;
+// Funció que s'encarrega de transformar cada paraula en un índex dins del mapa
+static int hash_fn(const char *s) {
+  int h = 10000;
   unsigned char c;
   while ((c = (unsigned char)*s++)) {
     h = ((h << 5) + h) + c;
@@ -19,13 +15,14 @@ static uint64_t hash_fn(const char *s) {
   return h;
 }
 
-
+// Funció que inicialitza un Hashmap amb un nombre definit de caselles
 HashMap *HashMap_create(size_t bucket_count) {
-  // Allocate map structure
+  // Reserva memòria per l'estructura del mapa
   HashMap *map = malloc(sizeof *map);
-  if (!map) return NULL;
+  if (!map)
+    return NULL;
   map->bucket_count = bucket_count;
-  // Allocate buckets array
+  // Reserva memòria per l'array de compartiments
   map->buckets = calloc(bucket_count, sizeof *map->buckets);
   if (!map->buckets) {
     free(map);
@@ -34,15 +31,15 @@ HashMap *HashMap_create(size_t bucket_count) {
   return map;
 }
 
-
+// Funció que allibera la memòria del hashmap
 void HashMap_free(HashMap *map) {
-  if (!map) return;
+  if (!map)
+    return;
   for (size_t i = 0; i < map->bucket_count; ++i) {
     HashNode *node = map->buckets[i];
     while (node) {
       HashNode *tmp = node->next;
       free(node->key);
-      // node->value is managed externally
       free(node);
       node = tmp;
     }
@@ -51,21 +48,22 @@ void HashMap_free(HashMap *map) {
   free(map);
 }
 
-
+// Funció que insereix una paraula (key) i la seva llista de documents (value)
 int HashMap_put(HashMap *map, const char *key, void *value) {
-  uint64_t i = hash_fn(key) % map->bucket_count;
+  int i = hash_fn(key) % map->bucket_count;
   HashNode *node = map->buckets[i];
-  // Search existing node
+  // Cerca d'un node existent
   while (node) {
     if (strcmp(node->key, key) == 0) {
-      node->value = value; // replace value
+      node->value = value;
       return 1;
     }
     node = node->next;
   }
-  // create new node
+  // Creem un nou node
   node = malloc(sizeof *node);
-  if (!node) return 0;
+  if (!node)
+    return 0;
   node->key = strdup(key);
   node->value = value;
   node->next = map->buckets[i];
@@ -73,9 +71,9 @@ int HashMap_put(HashMap *map, const char *key, void *value) {
   return 1;
 }
 
-
+// Funció que busca la llista de documents associada a la paraula
 void *HashMap_get(HashMap *map, const char *key) {
-  uint64_t i = hash_fn(key) % map->bucket_count;
+  int i = hash_fn(key) % map->bucket_count;
   HashNode *node = map->buckets[i];
   while (node) {
     if (strcmp(node->key, key) == 0) {
@@ -85,52 +83,63 @@ void *HashMap_get(HashMap *map, const char *key) {
   }
   return NULL;
 }
+
+// Funció que transforma la cvadena a minúscules
 static void normalize_word(char *word) {
-  size_t len = strlen(word);
-  size_t idx = 0;
-  for (size_t i = 0; i < len; i++) {
-      if (isalpha((unsigned char)word[i])) {
-          word[idx++] = tolower((unsigned char)word[i]);
-      }
+  int len = strlen(word);
+  int idx = 0;
+  for (int i = 0; i < len; i++) {
+    if (isalpha((unsigned char)
+                    word[i])) { // Comprova que sigui una lletra alfabètica
+                                // (tant majúscula com minúscula)
+      word[idx++] =
+          tolower((unsigned char)word[i]); // Convertim la lletra a minúscula
+    }
   }
   word[idx] = '\0';
 }
 
-void add_words_to_reverse_index(HashMap *reverseIndex, void **docs, int totalDocs) {
+// Funció que insereix totes les paraules de tots els documents al Hashmap
+void add_words_to_reverse_index(HashMap *reverseIndex, void **docs,
+                                int totalDocs) {
   for (int i = 0; i < totalDocs; i++) {
-      typedef struct Document {
-          int id;
-          char *title;
-          char *body;
-          void *links;
-      } Document;
+    typedef struct Document {
+      int id;
+      char *title;
+      char *body;
+      void *links;
+    } Document;
 
-      Document *doc = (Document *)docs[i];
-      char *text = doc->body;
+    Document *doc = (Document *)docs[i];
+    char *text = doc->body;
 
-      char *copy = strdup(text);
-      if (!copy) continue;
+    char *copy = strdup(text); // Dupliquem la cadena de caràcters
+    if (!copy)
+      continue;
 
-      char *token = strtok(copy, " \t\n\r.,;:!?\"()[]{}<>");
+    char *token = strtok(
+        copy,
+        " \t\n\r.,;:!?\"()[]{}<>"); // Retornem aquella cadena sense aquests
+                                    // caràcters especials (els "eliminem")
 
-      while (token != NULL) {
-          normalize_word(token);
-          if (strlen(token) > 0) {
-              DocIdList*list = (DocIdList *)HashMap_get(reverseIndex, token);
+    while (token != NULL) {
+      normalize_word(token);
+      if (strlen(token) > 0) {
+        DocIdList *list = (DocIdList *)HashMap_get(reverseIndex, token);
 
-              if (!list) {
-                  list = DocIdList_create();
-                  if (!list) {
-                      free(copy);
-                      return;
-                  }
-                  HashMap_put(reverseIndex, token, list);
-              }
-
-              DocIdList_add(list, doc->id);
+        if (!list) {
+          list = DocIdList_create();
+          if (!list) {
+            free(copy);
+            return;
           }
-          token = strtok(NULL, " \t\n\r.,;:!?\"()[]{}<>");
+          HashMap_put(reverseIndex, token, list);
+        }
+
+        DocIdList_add(list, doc->id);
       }
-      free(copy);
+      token = strtok(NULL, " \t\n\r.,;:!?\"()[]{}<>");
+    }
+    free(copy);
   }
 }
