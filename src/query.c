@@ -112,6 +112,28 @@ bool document_matches(const Document *doc, const Query *q) {
   return true;
 }
 
+void searchDocumentLineal(Document **allDocs, int totalDocs, const Query *q) {
+  int recompte = 0;
+  int primer = 1; // Creem aquesta variable perquè no s'imprimeixi una , al
+                  // final de l'últim índex
+  printf("Documents que coincideixen amb la consulta:\n\t");
+  for (int i = 0; i < totalDocs; ++i) {
+    if (document_matches(allDocs[i], q)) {
+      if (!primer) { // Quan primer no val 1, cosa que vol dir que ja hem imprès
+                     // un índex abans, imprimim la coma
+        printf(", ");
+      }
+      printf("%d", allDocs[i]->id);
+      primer = 0;
+      recompte++;
+    }
+  }
+  if (recompte == 0) {
+    printf("No s'ha trobat cap document per la consulta");
+  }
+  printf("\n");
+}
+
 // Inicialitzem la cua a NULL
 static Query *queue[3] = {NULL, NULL, NULL};
 static int count = 0;
@@ -152,20 +174,4 @@ void query_queue_clear(void) {
     queue[i] = NULL;
   }
   count = 0;
-}
-
-void searchDocumentLineal(Document **allDocs, int totalDocs, const Query *q) {
-  int recompte = 0;
-  printf("Documents que coincideixen amb la consulta:\n\t");
-  for (int i = 0; i < totalDocs; ++i) {
-    if (document_matches(allDocs[i], q)) {
-      printf("%d", allDocs[i]->id);
-      printf(", ");
-      recompte++;
-    }
-  }
-  if (recompte == 0) {
-    printf("No s'ha trobat cap document per la consulta");
-  }
-  printf("\n");
 }
