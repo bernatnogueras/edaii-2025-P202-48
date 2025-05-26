@@ -6,13 +6,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 typedef struct {
   int *doc_ids;
   size_t count;
   size_t capacity;
 } DocIdList;
-
 
 DocIdList *DocIdList_create(void);
 bool DocIdList_contains(DocIdList *list, int doc_id);

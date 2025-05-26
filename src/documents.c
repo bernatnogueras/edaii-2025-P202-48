@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 // Cada vegada que el codi detecti un link a la part del 'body', l'estructura de
 // links s'anirà omplint dinàmicament
 Links *LinksInit(void) {
@@ -15,7 +14,6 @@ Links *LinksInit(void) {
   links->count = 0;      // Inicialitza el contador de l'estructura a 0
   return links;          // Retorna el punter a l'estructura links
 }
-
 
 //'Desreialitzar'--> Convertir dades que estan guardades en un fitxer a una
 // estructura de dades per a poder-les utilitzar
@@ -103,7 +101,6 @@ Document *document_desserialize(char *path) {
   return document; // Retorna el document
 }
 
-
 // Creem una funció que retorna una llista de documents
 Document **loadAllDocuments(void) {
   char *folders[] = {
@@ -141,7 +138,6 @@ Document **loadAllDocuments(void) {
   return docs;
 }
 
-
 void freeDocument(
     Document *doc) { // Creem una funció que permet alliberar el document
   free(doc->title);
@@ -149,7 +145,6 @@ void freeDocument(
   free(doc->links);
   free(doc);
 }
-
 
 void freeAllDocuments(Document **allDocs, int totalDocs) {
   if (allDocs == NULL)

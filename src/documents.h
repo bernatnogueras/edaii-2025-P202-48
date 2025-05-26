@@ -12,14 +12,12 @@ typedef struct {
   int count;
 } Links;
 
-
 typedef struct {
   int id;
   char *title;
   char *body;
   Links *links;
 } Document;
-
 
 Links *LinksInit(void);
 Document *document_desserialize(char *path);

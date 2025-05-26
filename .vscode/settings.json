@@ -3,6 +3,7 @@
     "files.associations": {
         "documents.h": "c",
         "stdlib.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "assert.h": "c"
     },
 }

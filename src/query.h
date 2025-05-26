@@ -15,7 +15,7 @@ typedef struct {
   int count;
 } Query;
 
-//char *normalize(const char *word);
+// char *normalize(const char *word);
 Query *Query_init(const char *line);
 void query_queue(Query *q);
 
@@ -24,7 +24,5 @@ void searchDocumentLineal(Document **allDocs, int totalDocs, const Query *q);
 
 void query_queue_clear(void);
 void Query_free(Query *q);
-
-
 
 #endif

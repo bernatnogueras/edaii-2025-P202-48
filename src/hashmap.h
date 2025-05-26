@@ -3,7 +3,6 @@
 #include "docIdList.h"
 #include <stddef.h>
 
-
 // Cadena d'elements a un hashmap de valors genèrics (void*)
 typedef struct HashNode {
   char *key;
@@ -11,12 +10,10 @@ typedef struct HashNode {
   struct HashNode *next;
 } HashNode;
 
-
 typedef struct HashMap {
   size_t bucket_count;
   HashNode **buckets;
 } HashMap;
-
 
 int hash_fn(const char *s);
 HashMap *HashMap_create(size_t bucket_count);

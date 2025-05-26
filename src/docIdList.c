@@ -3,18 +3,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 typedef struct {
   int *doc_ids;    // Array  IDs
   size_t count;    // Número de IDs guardats
   size_t capacity; // Capacitat actual array
 } DocIdList;
 
-
 // Creem una llista buida
 DocIdList *DocIdList_create(void) {
   DocIdList *list = malloc(sizeof(DocIdList));
-  if (!list){
+  if (!list) {
     return NULL;
   }
   list->capacity = 4;
@@ -27,7 +25,6 @@ DocIdList *DocIdList_create(void) {
   return list;
 }
 
-
 // Verifiquem si la llista ja conté un doc_id
 bool DocIdList_contains(DocIdList *list, int doc_id) {
   for (size_t i = 0; i < list->count; ++i) {
@@ -37,7 +34,6 @@ bool DocIdList_contains(DocIdList *list, int doc_id) {
   return false;
 }
 
-
 // Afegim un doc_id a la lista
 int DocIdList_add(DocIdList *list, int doc_id) {
   if (DocIdList_contains(list, doc_id)) {
@@ -46,7 +42,7 @@ int DocIdList_add(DocIdList *list, int doc_id) {
   if (list->count == list->capacity) {
     size_t new_capacity = list->capacity * 2;
     int *new_arr = realloc(list->doc_ids, sizeof(int) * new_capacity);
-    if (!new_arr){
+    if (!new_arr) {
       return 0; // realloc ha fallat
     }
     // Si realloc ha fallat, no esborrem l'array original
@@ -60,11 +56,7 @@ int DocIdList_add(DocIdList *list, int doc_id) {
   return 1;
 }
 
-
-bool DocIdList_is_empty(DocIdList *list){ 
-  return list->count == 0; 
-}
-
+bool DocIdList_is_empty(DocIdList *list) { return list->count == 0; }
 
 // Funció que ens permet trobar els elements comuns a dues llistes
 DocIdList *DocIdList_intersect(DocIdList *a, DocIdList *b) {
@@ -79,7 +71,6 @@ DocIdList *DocIdList_intersect(DocIdList *a, DocIdList *b) {
   }
   return result;
 }
-
 
 // Funció que retorna una nova llista amb els doc_ids de la 'a' que no estan a
 // 'b'
@@ -96,7 +87,6 @@ DocIdList *DocIdList_difference(DocIdList *a, DocIdList *b) {
   return result;
 }
 
-
 void DocIdList_print(DocIdList *list) {
   if (!list || list->count == 0) {
     printf("No s'ha trobat cap document\n");
@@ -111,7 +101,6 @@ void DocIdList_print(DocIdList *list) {
   }
   printf("\n");
 }
-
 
 // Buidem la llista
 void DocIdList_free(DocIdList *list) {

@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 // Funció que s'encarrega de transformar cada paraula en un índex dins del mapa
 int hash_fn(const char *s) {
   int h = 10000;
@@ -18,8 +17,8 @@ int hash_fn(const char *s) {
   return h;
 }
 
-
-// Funció que inicialitza un Hashmap amb un nombre definit de caselles/compartiments
+// Funció que inicialitza un Hashmap amb un nombre definit de
+// caselles/compartiments
 HashMap *HashMap_create(size_t bucket_count) {
   // Reserva memòria per l'estructura del mapa
   HashMap *map = malloc(sizeof *map);
@@ -35,8 +34,8 @@ HashMap *HashMap_create(size_t bucket_count) {
   return map;
 }
 
-
-// Funció que insereix una paraula (key) i la seva llista de documents (value) i clona la clau
+// Funció que insereix una paraula (key) i la seva llista de documents (value) i
+// clona la clau
 int HashMap_put(HashMap *map, const char *key, void *value) {
   int i = hash_fn(key) % map->bucket_count;
   HashNode *node = map->buckets[i];
@@ -59,7 +58,6 @@ int HashMap_put(HashMap *map, const char *key, void *value) {
   return 1;
 }
 
-
 // Retorna el valor associat a la clau o NULL si no existeix
 void *HashMap_get(HashMap *map, const char *key) {
   int i = hash_fn(key) % map->bucket_count;
@@ -72,7 +70,6 @@ void *HashMap_get(HashMap *map, const char *key) {
   }
   return NULL;
 }
-
 
 // Funció que transforma la cadena a minúscules
 void normalize_word(char *word) {
@@ -90,7 +87,8 @@ void normalize_word(char *word) {
 }
 
 // Funció que insereix totes les paraules de tots els documents al Hashmap
-// Utilitzem void **docs perquè docs és un array de punters a qualsevol tipus de dades
+// Utilitzem void **docs perquè docs és un array de punters a qualsevol tipus de
+// dades
 void add_words_to_reverse_index(HashMap *reverseIndex, void **docs,
                                 int totalDocs) {
   for (int i = 0; i < totalDocs; i++) {
@@ -134,7 +132,6 @@ void add_words_to_reverse_index(HashMap *reverseIndex, void **docs,
     free(copy);
   }
 }
-
 
 // Funció que allibera la memòria del hashmap
 void HashMap_free(HashMap *map) {
