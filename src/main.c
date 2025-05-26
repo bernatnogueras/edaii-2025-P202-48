@@ -131,6 +131,7 @@ int main() {
       printf("Documents que coincideixen amb la consulta:\n");
       DocIdList_print(result);
     }
+    printf("\n");
 
     DocIdList_free(result);
     query_queue(q);

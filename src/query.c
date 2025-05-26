@@ -155,11 +155,17 @@ void query_queue_clear(void) {
 }
 
 void searchDocumentLineal(Document **allDocs, int totalDocs, const Query *q) {
+  int recompte = 0;
+  printf("Documents que coincideixen amb la consulta:\n\t");
   for (int i = 0; i < totalDocs; ++i) {
     if (document_matches(allDocs[i], q)) {
-      printf("\"%s\" SÍ coincideix\n", allDocs[i]->title);
-    } else {
-      printf("\"%s\" NO coincideix\n", allDocs[i]->title);
+      printf("%d", allDocs[i]->id);
+      printf(", ");
+      recompte++;
     }
   }
+  if (recompte == 0) {
+    printf("No s'ha trobat cap document per la consulta");
+  }
+  printf("\n");
 }
