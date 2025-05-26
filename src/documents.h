@@ -12,6 +12,7 @@ typedef struct {
   int count;
 } Links;
 
+
 typedef struct {
   int id;
   char *title;
@@ -19,9 +20,10 @@ typedef struct {
   Links *links;
 } Document;
 
+
+Links *LinksInit(void);
 Document *document_desserialize(char *path);
 Document **loadAllDocuments(void);
-Links *LinksInit(void);
 void freeDocument(Document *doc);
 void freeAllDocuments(Document **allDocs, int totalDocs);
 

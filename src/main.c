@@ -10,21 +10,6 @@
 #include <string.h>
 #include <sys/stat.h>
 
-/*
-// LA PODEM BORRAR, NO L'ESTEM UTILITZANT
-void createaleak() {
-  char *memoria = malloc(20 * sizeof(char));
-  if(!memoria){
-    fprintf(stderr, " Error allocating memòria\n");
-    return;
-    // Inicialitzem la cadena amb una cadena buida
-    memoria[0] = '\0';
-  }
-  printf("Allocated leaking string: %s", memoria);
-  free(memoria);
-}
-*/
-
 int main() {
   Document **allDocs = loadAllDocuments();
   if (allDocs == NULL) {
@@ -35,8 +20,8 @@ int main() {
   const int totalDocs = 13;
   char input[1024];
 
-  /*
-      //BÚSQUEDA LINEAL (versió lenta)
+  ///*
+      /////////// BÚSQUEDA LINEAL (versió lenta) ///////////
 
       while (1) {
       printf("Search (lineal): ");
@@ -49,7 +34,7 @@ int main() {
         break;
       }
 
-      size_t len = strlen(input);
+      int len = strlen(input);
       if (len > 0 && input[len - 1] == '\n') {
         input[len - 1] = '\0';
         --len;
@@ -67,11 +52,11 @@ int main() {
       query_queue(q);
     }
 
-    query_queue_clear();
-  */
+  /////////// ACABA VERSIÓ LINEAL ///////////
+  //*/
 
-  // HASHMAP (versió ràpida)
-
+  /////////// HASHMAP (versió ràpida) ///////////
+  /*
   HashMap *reverseIndex = HashMap_create(10000);
   if (!reverseIndex) {
     fprintf(stderr, "Error creant el hashmap\n");
@@ -79,6 +64,7 @@ int main() {
     return 1;
   }
   add_words_to_reverse_index(reverseIndex, (void **)allDocs, totalDocs);
+
   while (1) {
     printf("Search (hashmap): ");
     if (!fgets(input, sizeof(input), stdin)) {
@@ -89,36 +75,72 @@ int main() {
     if (input[0] == '\n') {
       break;
     }
-    size_t len = strlen(input);
+    int len = strlen(input);
     if (len > 0 && input[len - 1] == '\n') {
       input[len - 1] = '\0';
       --len;
     }
-
-    normalize_word(input);
-    if (strlen(input) == 0) {
-      printf("Entrada no vàlida\n");
-      continue;
-    }
-
-    DocIdList *list = (DocIdList *)HashMap_get(reverseIndex, input);
-    if (list == NULL || DocIdList_is_empty(list)) {
-      printf("\tNo s'ha trobat cap document amb la paraula '%s'\n", input);
-    } else {
-      printf("Documents amb la paraula '%s':\n", input);
-      DocIdList_print(list);
-    }
-    printf("\n");
-    
     Query *q = Query_init(input);
     if (!q) {
       fprintf(stderr, "Error inicialitzant la query\n");
       break;
     }
+    DocIdList *result = NULL;
+
+    //  Analitzem les paraules que hem de buscar (les que estan incloses)
+    QueryNode *actual = q->head;
+
+    while (actual) {
+      if (!actual->exclude) {
+        DocIdList *llista = HashMap_get(reverseIndex, actual->keyword);
+        if (llista) {
+          if (!result) {
+            result = DocIdList_create();
+            for (size_t i = 0; i < llista->count; ++i) {
+              DocIdList_add(result, llista->doc_ids[i]);
+            }
+          } else {
+            DocIdList *tmp = DocIdList_intersect(result, llista);
+            DocIdList_free(result);
+            result = tmp;
+          }
+        }
+      }
+      actual = actual->next;
+    }
+
+    //  Analitzem les paraules que hem d'excloure (les que NO estan incloses)
+
+    actual = q->head;
+    while (actual && result) {
+      if (actual->exclude) {
+        DocIdList *exclosos = HashMap_get(reverseIndex, actual->keyword);
+        if (exclosos) {
+          DocIdList *tmp = DocIdList_difference(result, exclosos);
+          DocIdList_free(result);
+          result = tmp;
+        }
+      }
+      actual = actual->next;
+    }
+
+    // Imprimim el resultat
+    if (!result || DocIdList_is_empty(result)) {
+      printf("\tNo s'ha trobat cap document per la consulta\n");
+    } else {
+      printf("Documents que coincideixen amb la consulta:\n");
+      DocIdList_print(result);
+    }
+
+    DocIdList_free(result);
     query_queue(q);
   }
-  
   HashMap_free(reverseIndex);
+  
+  /////////// ACABA VERSIÓ HASHMAP ///////////
+  */
+
+
   query_queue_clear();
   freeAllDocuments(allDocs, totalDocs);
   return 0;

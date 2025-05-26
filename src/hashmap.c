@@ -7,8 +7,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 // Funció que s'encarrega de transformar cada paraula en un índex dins del mapa
-static int hash_fn(const char *s) {
+int hash_fn(const char *s) {
   int h = 10000;
   unsigned char c;
   while ((c = (unsigned char)*s++)) {
@@ -17,7 +18,8 @@ static int hash_fn(const char *s) {
   return h;
 }
 
-// Funció que inicialitza un Hashmap amb un nombre definit de caselles
+
+// Funció que inicialitza un Hashmap amb un nombre definit de caselles/compartiments
 HashMap *HashMap_create(size_t bucket_count) {
   // Reserva memòria per l'estructura del mapa
   HashMap *map = malloc(sizeof *map);
@@ -33,24 +35,8 @@ HashMap *HashMap_create(size_t bucket_count) {
   return map;
 }
 
-// Funció que allibera la memòria del hashmap
-void HashMap_free(HashMap *map) {
-  if (!map)
-    return;
-  for (size_t i = 0; i < map->bucket_count; ++i) {
-    HashNode *node = map->buckets[i];
-    while (node) {
-      HashNode *tmp = node->next;
-      free(node->key);
-      free(node);
-      node = tmp;
-    }
-  }
-  free(map->buckets);
-  free(map);
-}
 
-// Funció que insereix una paraula (key) i la seva llista de documents (value)
+// Funció que insereix una paraula (key) i la seva llista de documents (value) i clona la clau
 int HashMap_put(HashMap *map, const char *key, void *value) {
   int i = hash_fn(key) % map->bucket_count;
   HashNode *node = map->buckets[i];
@@ -73,7 +59,8 @@ int HashMap_put(HashMap *map, const char *key, void *value) {
   return 1;
 }
 
-// Funció que busca la llista de documents associada a la paraula
+
+// Retorna el valor associat a la clau o NULL si no existeix
 void *HashMap_get(HashMap *map, const char *key) {
   int i = hash_fn(key) % map->bucket_count;
   HashNode *node = map->buckets[i];
@@ -86,7 +73,8 @@ void *HashMap_get(HashMap *map, const char *key) {
   return NULL;
 }
 
-// Funció que transforma la cvadena a minúscules
+
+// Funció que transforma la cadena a minúscules
 void normalize_word(char *word) {
   int len = strlen(word);
   int idx = 0;
@@ -102,6 +90,7 @@ void normalize_word(char *word) {
 }
 
 // Funció que insereix totes les paraules de tots els documents al Hashmap
+// Utilitzem void **docs perquè docs és un array de punters a qualsevol tipus de dades
 void add_words_to_reverse_index(HashMap *reverseIndex, void **docs,
                                 int totalDocs) {
   for (int i = 0; i < totalDocs; i++) {
@@ -146,15 +135,20 @@ void add_words_to_reverse_index(HashMap *reverseIndex, void **docs,
   }
 }
 
-// Funció que ens permet trobar els elements comuns a dues llistes
-/*
-DocIdList *DocIdList_comuns(DocIdList *a, DocIdList *b){
-  DocIdList *result = DocIdList_create(); 
-  if(!result){
-    return NULL;
+
+// Funció que allibera la memòria del hashmap
+void HashMap_free(HashMap *map) {
+  if (!map)
+    return;
+  for (size_t i = 0; i < map->bucket_count; ++i) {
+    HashNode *node = map->buckets[i];
+    while (node) {
+      HashNode *tmp = node->next;
+      free(node->key);
+      free(node);
+      node = tmp;
+    }
   }
-  for(size_t i=0;i<a->count;++i){
-    if(DocIdList )
-  }
+  free(map->buckets);
+  free(map);
 }
-  */
