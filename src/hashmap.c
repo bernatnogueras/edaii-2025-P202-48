@@ -1,7 +1,9 @@
 #include "hashmap.h"
 #include "docIdList.h"
 #include <ctype.h>
+#include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -85,7 +87,7 @@ void *HashMap_get(HashMap *map, const char *key) {
 }
 
 // Funció que transforma la cvadena a minúscules
-static void normalize_word(char *word) {
+void normalize_word(char *word) {
   int len = strlen(word);
   int idx = 0;
   for (int i = 0; i < len; i++) {
@@ -143,3 +145,16 @@ void add_words_to_reverse_index(HashMap *reverseIndex, void **docs,
     free(copy);
   }
 }
+
+// Funció que ens permet trobar els elements comuns a dues llistes
+/*
+DocIdList *DocIdList_comuns(DocIdList *a, DocIdList *b){
+  DocIdList *result = DocIdList_create(); 
+  if(!result){
+    return NULL;
+  }
+  for(size_t i=0;i<a->count;++i){
+    if(DocIdList )
+  }
+}
+  */

@@ -1,6 +1,8 @@
 {
     "files.eol": "\n",
     "files.associations": {
-        "documents.h": "c"
+        "documents.h": "c",
+        "stdlib.h": "c",
+        "stdbool.h": "c"
     },
 }

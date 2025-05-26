@@ -27,5 +27,8 @@ int HashMap_put(HashMap *map, const char *key, void *value);
 // Retorna el valor associat a la clau o NULL si no existeix
 void *HashMap_get(HashMap *map, const char *key);
 void *HashMap_get(HashMap *map, const char *key);
+void add_words_to_reverse_index(HashMap *reverseIndex, void **docs,
+                                int totalDocs);
+void normalize_word(char *word);
 
 #endif

@@ -1,5 +1,7 @@
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct {
   int *doc_ids;    // Array  IDs
@@ -22,13 +24,6 @@ DocIdList *DocIdList_create(void) {
   return list;
 }
 
-// vuidar la llista
-void DocIdList_free(DocIdList *list) {
-  if (!list)
-    return;
-  free(list->doc_ids);
-  free(list);
-}
 
 // Verificar si la lista ya conte un doc_id
 bool DocIdList_contains(DocIdList *list, int doc_id) {
@@ -58,4 +53,29 @@ int DocIdList_add(DocIdList *list, int doc_id) {
   }
   list->doc_ids[list->count++] = doc_id;
   return 1;
+}
+
+bool DocIdList_is_empty(DocIdList *list) { return list->count == 0; }
+
+void DocIdList_print(DocIdList *list) {
+  if (!list || list->count == 0) {
+    printf("No s'ha trobat cap document\n");
+    return;
+  }
+  printf("\t");
+  for (size_t i = 0; i < list->count; ++i) {
+    printf("%d", list->doc_ids[i]);
+    if (i < list->count - 1) {
+      printf(", ");
+    }
+  }
+  printf("\n");
+}
+
+// buidar la llista
+void DocIdList_free(DocIdList *list) {
+  if (!list)
+    return;
+  free(list->doc_ids);
+  free(list);
 }
