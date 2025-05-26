@@ -37,7 +37,7 @@ bool DocIdList_contains(DocIdList *list, int doc_id) {
 // Afegim un doc_id a la lista
 int DocIdList_add(DocIdList *list, int doc_id) {
   if (DocIdList_contains(list, doc_id)) {
-    return 1; // Ya estaba, no lo añade de nuevo
+    return 1; // Ja estava, no l'afageix de nou
   }
   if (list->count == list->capacity) {
     size_t new_capacity = list->capacity * 2;

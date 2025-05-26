@@ -65,23 +65,22 @@ Document *document_desserialize(char *path) {
     assert(bufferIdx < bufferSize);
     buffer[bufferIdx++] = ch;
     if (parsingLink) {
-      if (ch == ')') { // end of link
+      if (ch == ')') { 
         parsingLink = false;
         assert(linkBufferIdx < linkBufferSize);
         linkBuffer[linkBufferIdx++] = '\0';
         int linkId = atoi(linkBuffer);
 
-        // add to links
         assert(links->count < MAX_LINKS);
         links->ids[links->count++] = linkId;
 
         linkBufferIdx = 0;
-      } else if (ch != '(') { // skip first parenthesis of the link
+      } else if (ch != '(') { 
         assert(linkBufferIdx < linkBufferSize);
         linkBuffer[linkBufferIdx++] = ch;
       }
     } else if (ch ==
-               ']') { // found beginning of link id, e.g.: [my link text](123)
+               ']') { 
       parsingLink = true;
     }
   }
