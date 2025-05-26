@@ -20,7 +20,7 @@ int main() {
   const int totalDocs = 13;
   char input[1024];
 
-  ///*
+  /*
       /////////// BÚSQUEDA LINEAL (versió lenta) ///////////
 
       while (1) {
@@ -53,10 +53,10 @@ int main() {
     }
 
   /////////// ACABA VERSIÓ LINEAL ///////////
-  //*/
+  */
 
   /////////// HASHMAP (versió ràpida) ///////////
-  /*
+  ///*
   HashMap *reverseIndex = HashMap_create(10000);
   if (!reverseIndex) {
     fprintf(stderr, "Error creant el hashmap\n");
@@ -138,7 +138,7 @@ int main() {
   HashMap_free(reverseIndex);
   
   /////////// ACABA VERSIÓ HASHMAP ///////////
-  */
+  //*/
 
 
   query_queue_clear();

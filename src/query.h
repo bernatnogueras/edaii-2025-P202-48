@@ -17,7 +17,6 @@ typedef struct {
 
 char *normalize(const char *word);
 Query *Query_init(const char *line);
-bool document_matches(const Document *doc, const Query *q);
 void query_queue(Query *q);
 void query_queue_clear(void);
 void Query_free(Query *q);
