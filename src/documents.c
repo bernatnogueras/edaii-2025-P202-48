@@ -65,7 +65,7 @@ Document *document_desserialize(char *path) {
     assert(bufferIdx < bufferSize);
     buffer[bufferIdx++] = ch;
     if (parsingLink) {
-      if (ch == ')') { 
+      if (ch == ')') {
         parsingLink = false;
         assert(linkBufferIdx < linkBufferSize);
         linkBuffer[linkBufferIdx++] = '\0';
@@ -75,12 +75,11 @@ Document *document_desserialize(char *path) {
         links->ids[links->count++] = linkId;
 
         linkBufferIdx = 0;
-      } else if (ch != '(') { 
+      } else if (ch != '(') {
         assert(linkBufferIdx < linkBufferSize);
         linkBuffer[linkBufferIdx++] = ch;
       }
-    } else if (ch ==
-               ']') { 
+    } else if (ch == ']') {
       parsingLink = true;
     }
   }

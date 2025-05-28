@@ -134,7 +134,9 @@ void add_words_to_reverse_index(HashMap *reverseIndex, void **docs,
 }
 
 // Funció que allibera la memòria del hashmap
-void HashMap_free(HashMap *map) {
+// Allibera la clau amb el node->key
+// Allibera el valor amb free_value(node->value)
+void HashMap_free(HashMap *map, void (*free_value)(void *)) {
   if (!map)
     return;
   for (size_t i = 0; i < map->bucket_count; ++i) {
@@ -142,6 +144,9 @@ void HashMap_free(HashMap *map) {
     while (node) {
       HashNode *tmp = node->next;
       free(node->key);
+      if (free_value) {
+        free_value(node->value);
+      }
       free(node);
       node = tmp;
     }

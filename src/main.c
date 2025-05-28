@@ -136,7 +136,7 @@ int main() {
     DocIdList_free(result);
     query_queue(q);
   }
-  HashMap_free(reverseIndex);
+  HashMap_free(reverseIndex, (void (*)(void *))DocIdList_free);
 
   /////////// ACABA VERSIÓ HASHMAP ///////////
   //*/

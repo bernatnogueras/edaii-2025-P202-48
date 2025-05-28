@@ -22,6 +22,6 @@ void *HashMap_get(HashMap *map, const char *key);
 void normalize_word(char *word);
 void add_words_to_reverse_index(HashMap *reverseIndex, void **docs,
                                 int totalDocs);
-void HashMap_free(HashMap *map);
+void HashMap_free(HashMap *map, void (*free_value)(void *));
 
 #endif
