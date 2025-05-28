@@ -58,10 +58,9 @@ int main() {
   /////////// ACABA VERSIÓ LINEAL ///////////
   */
 
-
   /////////// HASHMAP (versió ràpida) ///////////
   ///*
-  
+
   // Creem un HashMap amb 10.000 compartiments/caselles
   HashMap *reverseIndex = HashMap_create(10000);
   if (!reverseIndex) {
@@ -69,7 +68,7 @@ int main() {
     freeAllDocuments(allDocs, totalDocs);
     return 1;
   }
-  //Afegim totes les paraules dels documents al reverse_index
+  // Afegim totes les paraules dels documents al reverse_index
   add_words_to_reverse_index(reverseIndex, (void **)allDocs, totalDocs);
 
   while (1) {
@@ -101,7 +100,8 @@ int main() {
     //  Analitzem les paraules que hem de buscar (les que estan incloses)
     QueryNode *actual = q->head;
 
-    // Realitzem el bucle per tal de només afegir els documents que continguin totes les paraules incloses
+    // Realitzem el bucle per tal de només afegir els documents que continguin
+    // totes les paraules incloses
     while (actual) {
       if (!actual->exclude) {
         DocIdList *llista = HashMap_get(reverseIndex, actual->keyword);
@@ -155,7 +155,7 @@ int main() {
   /////////// ACABA VERSIÓ HASHMAP ///////////
   //*/
 
-  //Alliberem l'historial de consultes
+  // Alliberem l'historial de consultes
   query_queue_clear();
   // Alliberem tots els documents carregats
   freeAllDocuments(allDocs, totalDocs);
