@@ -9,7 +9,7 @@ typedef struct {
   size_t capacity; // Capacitat actual array
 } DocIdList;
 
-// Creem una llista buida
+// Creem una llista buida de doc_ids amb una capacitat inicial de 4
 DocIdList *DocIdList_create(void) {
   DocIdList *list = malloc(sizeof(DocIdList));
   if (!list) {
@@ -25,7 +25,7 @@ DocIdList *DocIdList_create(void) {
   return list;
 }
 
-// Verifiquem si la llista ja conté un doc_id
+// Funció que retorna true si un doc_id es troba a la llista
 bool DocIdList_contains(DocIdList *list, int doc_id) {
   for (size_t i = 0; i < list->count; ++i) {
     if (list->doc_ids[i] == doc_id)
@@ -34,7 +34,8 @@ bool DocIdList_contains(DocIdList *list, int doc_id) {
   return false;
 }
 
-// Afegim un doc_id a la lista
+// Si el document no es troba a la llista, l'afegim
+// Si és necessari, redimensionem
 int DocIdList_add(DocIdList *list, int doc_id) {
   if (DocIdList_contains(list, doc_id)) {
     return 1; // Ja estava, no l'afageix de nou
@@ -56,9 +57,11 @@ int DocIdList_add(DocIdList *list, int doc_id) {
   return 1;
 }
 
+// Funció que comprova si la llista està buida
 bool DocIdList_is_empty(DocIdList *list) { return list->count == 0; }
 
-// Funció que ens permet trobar els elements comuns a dues llistes
+// Funció que ens permet trobar els elements comuns entre dues llistes, de fet,
+// retorna una nova llista amb aquests elements comuns
 DocIdList *DocIdList_intersect(DocIdList *a, DocIdList *b) {
   DocIdList *result = DocIdList_create();
   if (!result) {
@@ -72,8 +75,8 @@ DocIdList *DocIdList_intersect(DocIdList *a, DocIdList *b) {
   return result;
 }
 
-// Funció que retorna una nova llista amb els doc_ids de la 'a' que no estan a
-// 'b'
+// Funció que retorna una nova llista amb els doc_ids de la primera llista que
+// no estan a la segona llista
 DocIdList *DocIdList_difference(DocIdList *a, DocIdList *b) {
   DocIdList *result = DocIdList_create();
   if (!result) {
@@ -87,6 +90,8 @@ DocIdList *DocIdList_difference(DocIdList *a, DocIdList *b) {
   return result;
 }
 
+// Funció que ens permet imprimir els doc_ids, i si no n'hi ha també ho
+// notifiquem
 void DocIdList_print(DocIdList *list) {
   if (!list || list->count == 0) {
     printf("No s'ha trobat cap document\n");
@@ -102,7 +107,7 @@ void DocIdList_print(DocIdList *list) {
   printf("\n");
 }
 
-// Buidem la llista
+// Alliberem la memòria de la llista
 void DocIdList_free(DocIdList *list) {
   if (!list)
     return;

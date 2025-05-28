@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Funció que s'encarrega de transformar cada paraula en un índex dins del mapa
+// Funció que s'encarrega de calcular un índex a partir d'una cadena de text
 int hash_fn(const char *s) {
   int h = 10000;
   unsigned char c;
@@ -17,7 +17,7 @@ int hash_fn(const char *s) {
   return h;
 }
 
-// Funció que inicialitza un Hashmap amb un nombre definit de
+// Funció que crea un Hashmap amb un nombre determinat de
 // caselles/compartiments
 HashMap *HashMap_create(size_t bucket_count) {
   // Reserva memòria per l'estructura del mapa
@@ -34,8 +34,7 @@ HashMap *HashMap_create(size_t bucket_count) {
   return map;
 }
 
-// Funció que insereix una paraula (key) i la seva llista de documents (value) i
-// clona la clau
+// Funció que insereix/actualitza una clau i el seu valor en el hashmap
 int HashMap_put(HashMap *map, const char *key, void *value) {
   int i = hash_fn(key) % map->bucket_count;
   HashNode *node = map->buckets[i];
@@ -58,7 +57,7 @@ int HashMap_put(HashMap *map, const char *key, void *value) {
   return 1;
 }
 
-// Retorna el valor associat a la clau o NULL si no existeix
+// Funció que retorna el valor associat a la clau o NULL si no existeix
 void *HashMap_get(HashMap *map, const char *key) {
   int i = hash_fn(key) % map->bucket_count;
   HashNode *node = map->buckets[i];
@@ -86,9 +85,9 @@ void normalize_word(char *word) {
   word[idx] = '\0';
 }
 
-// Funció que insereix totes les paraules de tots els documents al Hashmap
-// Utilitzem void **docs perquè docs és un array de punters a qualsevol tipus de
-// dades
+// Funció que insereix totes les paraules de tots els documents al Hashmap.
+// Associa cada paraula amb la llista de documents on apareix Utilitzem void
+// **docs perquè docs és un array de punters a qualsevol tipus de dades
 void add_words_to_reverse_index(HashMap *reverseIndex, void **docs,
                                 int totalDocs) {
   for (int i = 0; i < totalDocs; i++) {
@@ -133,7 +132,7 @@ void add_words_to_reverse_index(HashMap *reverseIndex, void **docs,
   }
 }
 
-// Funció que allibera la memòria del hashmap
+// Funció que allibera la memòria del hashmap (clau i valor)
 // Allibera la clau amb el node->key
 // Allibera el valor amb free_value(node->value)
 void HashMap_free(HashMap *map, void (*free_value)(void *)) {

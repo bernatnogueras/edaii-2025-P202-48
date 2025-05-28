@@ -15,10 +15,10 @@ typedef struct {
 DocIdList *DocIdList_create(void);
 bool DocIdList_contains(DocIdList *list, int doc_id);
 int DocIdList_add(DocIdList *list, int doc_id);
-void DocIdList_free(DocIdList *list);
 bool DocIdList_is_empty(DocIdList *list);
 DocIdList *DocIdList_intersect(DocIdList *a, DocIdList *b);
 DocIdList *DocIdList_difference(DocIdList *a, DocIdList *b);
 void DocIdList_print(DocIdList *list);
+void DocIdList_free(DocIdList *list);
 
 #endif // DOCIDLIST_H

@@ -5,6 +5,7 @@
 #include <string.h>
 
 // Creem una funció que crea i inicialitza una estructura del tipus query
+// Detecta les paraules d'exclusió i les afageix en una llista
 Query *Query_init(const char *line) {
   Query *q = malloc(sizeof(Query)); // Reservem memòria dinàmica
   if (!q)
@@ -76,18 +77,6 @@ Query *Query_init(const char *line) {
   return q;
 }
 
-// Fucnió que allibera tota la memòria d'una estrcutura Query
-void Query_free(Query *q) {
-  QueryNode *curr = q->head;
-  while (curr) {
-    QueryNode *tmp = curr->next;
-    free(curr->keyword);
-    free(curr);
-    curr = tmp;
-  }
-  free(q);
-}
-
 // Funció que retorna true si conté les paraules obligatòries i no conté cap
 // paraula exclosa
 bool document_matches(const Document *doc, const Query *q) {
@@ -112,6 +101,8 @@ bool document_matches(const Document *doc, const Query *q) {
   return true;
 }
 
+// Funció que realitza una cerca lineal per tots els documents i imprimeix els
+// id que coincideixen amb la consulta
 void searchDocumentLineal(Document **allDocs, int totalDocs, const Query *q) {
   int recompte = 0;
   int primer = 1; // Creem aquesta variable perquè no s'imprimeixi una , al
@@ -137,7 +128,8 @@ void searchDocumentLineal(Document **allDocs, int totalDocs, const Query *q) {
 // Inicialitzem la cua a NULL
 static Query *queue[3] = {NULL, NULL, NULL};
 static int count = 0;
-// Show the last 3 queries using a queue
+// Funció que desa les 3 últimes consultes en una cua circular, permetent
+// mostrar "l'historial"
 void query_queue(Query *q) {
   // Creem un bucle per desplaçar tots els elements de la cua una posició
   // endarrera
@@ -168,10 +160,23 @@ void query_queue(Query *q) {
   printf("\n");
 }
 
+// Funció que buida la cua de l'historial i allibera la memòria
 void query_queue_clear(void) {
   for (int i = 0; i < count; ++i) {
     Query_free(queue[i]);
     queue[i] = NULL;
   }
   count = 0;
+}
+
+// Fucnió que allibera tota la memòria d'una estrcutura Query
+void Query_free(Query *q) {
+  QueryNode *curr = q->head;
+  while (curr) {
+    QueryNode *tmp = curr->next;
+    free(curr->keyword);
+    free(curr);
+    curr = tmp;
+  }
+  free(q);
 }
