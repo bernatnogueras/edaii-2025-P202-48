@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 // Cada vegada que el codi detecti un link a la part del 'body', l'estructura de
 // links s'anirà omplint dinàmicament. Per tant, inicialitza i retorna una
@@ -92,6 +93,10 @@ Document *document_desserialize(char *path) {
 
   // char *body = (char *)malloc(sizeof(char) * bufferIdx);
   // strcpy(body, buffer);
+
+  for (int i = 0; buffer[i] != '\0'; i++) {
+    buffer[i] = tolower((unsigned char)buffer[i]);
+  }
 
   document->body = (char *)malloc(sizeof(char) * (bufferIdx + 1));
   assert(document->body != NULL);

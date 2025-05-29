@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <ctype.h>
 
 int main() {
   // Carreguem tots els documents
@@ -21,7 +22,7 @@ int main() {
   const int totalDocs = 13;
   char input[1024];
 
-  /*
+  ///*
   /////////// BÚSQUEDA LINEAL (versió lenta) ///////////
 
   while (1) {
@@ -56,10 +57,10 @@ int main() {
   }
 
   /////////// ACABA VERSIÓ LINEAL ///////////
-  */
+  //*/
 
   /////////// HASHMAP (versió ràpida) ///////////
-  ///*
+  /*
 
   // Creem un HashMap amb 10.000 compartiments/caselles
   HashMap *reverseIndex = HashMap_create(10000);
@@ -153,7 +154,7 @@ int main() {
   HashMap_free(reverseIndex, (void (*)(void *))DocIdList_free);
 
   /////////// ACABA VERSIÓ HASHMAP ///////////
-  //*/
+  */
 
   // Alliberem l'historial de consultes
   query_queue_clear();
