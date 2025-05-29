@@ -146,7 +146,6 @@ void query_queue(Query *q) {
   count++; // Incrementem el contador
   printf("******* Recent Searches *******\n");
   for (int i = 0; i < count; ++i) {
-    //printf("*\t%d: \t*", i + 1);
     printf("*\t");
     for (QueryNode *n = queue[i]->head; n; n = n->next) {
       if (n->exclude) {

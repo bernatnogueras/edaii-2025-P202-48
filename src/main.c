@@ -22,7 +22,7 @@ int main() {
   const int totalDocs = 13;
   char input[1024];
 
-  ///*
+  /*
   /////////// BÚSQUEDA LINEAL (versió lenta) ///////////
 
   while (1) {
@@ -39,7 +39,7 @@ int main() {
 
     // Convertim tot l'input a minúscula
     int llargada = strlen(input);
-    for(int i=0; i<llargada;++i){
+    for (int i = 0; i < llargada; ++i) {
       input[i] = tolower((unsigned char)input[i]);
     }
 
@@ -63,10 +63,10 @@ int main() {
   }
 
   /////////// ACABA VERSIÓ LINEAL ///////////
-  //*/
+  */
 
   /////////// HASHMAP (versió ràpida) ///////////
-  /*
+  ///*
 
   // Creem un HashMap amb 10.000 compartiments/caselles
   HashMap *reverseIndex = HashMap_create(10000);
@@ -165,7 +165,7 @@ int main() {
   HashMap_free(reverseIndex, (void (*)(void *))DocIdList_free);
 
   /////////// ACABA VERSIÓ HASHMAP ///////////
-  */
+  //*/
 
   // Alliberem l'historial de consultes
   query_queue_clear();
