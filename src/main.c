@@ -3,13 +3,13 @@
 #include "hashmap.h"
 #include "query.h"
 #include "sample_lib.h"
+#include <ctype.h>
 #include <dirent.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
-#include <ctype.h>
 
 int main() {
   // Carreguem tots els documents
@@ -22,7 +22,7 @@ int main() {
   const int totalDocs = 13;
   char input[1024];
 
-  ///*
+  /*
   /////////// BÚSQUEDA LINEAL (versió lenta) ///////////
 
   while (1) {
@@ -35,6 +35,12 @@ int main() {
     // Si l'usuari clica enter, sortim
     if (input[0] == '\n') {
       break;
+    }
+
+    // Convertim tot l'input a minúscula
+    int llargada = strlen(input);
+    for(int i=0; i<llargada;++i){
+      input[i] = tolower((unsigned char)input[i]);
     }
 
     // Eliminem el salt de línia al final de la cadena
@@ -57,10 +63,10 @@ int main() {
   }
 
   /////////// ACABA VERSIÓ LINEAL ///////////
-  //*/
+  */
 
   /////////// HASHMAP (versió ràpida) ///////////
-  /*
+  ///*
 
   // Creem un HashMap amb 10.000 compartiments/caselles
   HashMap *reverseIndex = HashMap_create(10000);
@@ -84,8 +90,13 @@ int main() {
       break;
     }
 
-    // Eliminem el salt de línia al final de la cadena
     int len = strlen(input);
+    // Convertim tot l'input a minúscula
+    for (int i = 0; i < len; ++i) {
+      input[i] = tolower((unsigned char)input[i]);
+    }
+
+    // Eliminem el salt de línia al final de la cadena
     if (len > 0 && input[len - 1] == '\n') {
       input[len - 1] = '\0';
       --len;
@@ -154,7 +165,7 @@ int main() {
   HashMap_free(reverseIndex, (void (*)(void *))DocIdList_free);
 
   /////////// ACABA VERSIÓ HASHMAP ///////////
-  */
+  //*/
 
   // Alliberem l'historial de consultes
   query_queue_clear();

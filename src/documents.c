@@ -1,10 +1,10 @@
 #include "documents.h"
 #include <assert.h>
+#include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 
 // Cada vegada que el codi detecti un link a la part del 'body', l'estructura de
 // links s'anirà omplint dinàmicament. Per tant, inicialitza i retorna una
