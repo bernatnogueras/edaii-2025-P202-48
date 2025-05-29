@@ -144,19 +144,20 @@ void query_queue(Query *q) {
   // recent
   queue[0] = q;
   count++; // Incrementem el contador
-
-  printf("L'historial de les últimes consultes és:\n");
+  printf("******* Recent Searches *******\n");
   for (int i = 0; i < count; ++i) {
-    printf("·Query %d: ", i + 1);
+    //printf("*\t%d: \t*", i + 1);
+    printf("*\t");
     for (QueryNode *n = queue[i]->head; n; n = n->next) {
       if (n->exclude) {
-        printf("-%s ", n->keyword);
+        printf("-%s", n->keyword);
       } else {
         printf("%s ", n->keyword);
       }
     }
     printf("\n");
   }
+  printf("***** Recent Searches END *****\n");
   printf("\n");
 }
 
