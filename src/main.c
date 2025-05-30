@@ -2,6 +2,7 @@
 #include "documents.h"
 #include "hashmap.h"
 #include "query.h"
+#include "graph.h"
 #include "sample_lib.h"
 #include <ctype.h>
 #include <dirent.h>
@@ -21,6 +22,10 @@ int main() {
 
   const int totalDocs = 13;
   char input[1024];
+
+  Graph *g = crear_graph(allDocs, totalDocs);
+  omplir_matriu(g);
+  int *link_counts = relevance_score(g);
 
   /*
   /////////// BÚSQUEDA LINEAL (versió lenta) ///////////
@@ -167,6 +172,8 @@ int main() {
   /////////// ACABA VERSIÓ HASHMAP ///////////
   //*/
 
+  // Alliberem el relevance score
+  free(link_counts);
   // Alliberem l'historial de consultes
   query_queue_clear();
   // Alliberem tots els documents carregats
