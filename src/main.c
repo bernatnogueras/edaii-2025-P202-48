@@ -66,7 +66,7 @@ int main() {
     printf("\n");
 
     if (!result || DocIdList_is_empty(result)) {
-      printf("\tNo s'ha trobat cap document per la consulta\n");
+      printf("\033[1;31m\tNo s'ha trobat cap document per la consulta\n\033[0m");
     } else {
       int n_resultats = 0;
       Relevance *top = relevance_score_filtered(g, result, &n_resultats);
@@ -171,7 +171,7 @@ int main() {
     }
 
     if (!result || DocIdList_is_empty(result)) {
-      printf("\tNo s'ha trobat cap document per la consulta\n");
+      printf("\033[1;31m\tNo s'ha trobat cap document per la consulta\n\033[0m");
     } else {
       int n_resultats = 0;
       Relevance *top = relevance_score_filtered(g, result, &n_resultats);
