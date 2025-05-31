@@ -128,8 +128,8 @@ void print_relevance(Relevance *top, Document **allDocs, int n) {
 void select_document(Document **allDocs, Relevance *top, int n) {
   char c[16];
   printf("\033[1;34mSelecciona un document (0-%d):\033[0m ", n - 1);
-  
-  if(!fgets(c, sizeof(c),stdin)){
+
+  if (!fgets(c, sizeof(c), stdin)) {
     return;
   }
 
@@ -137,7 +137,7 @@ void select_document(Document **allDocs, Relevance *top, int n) {
     return;
   }
   int num = atoi(c);
-  
+
   if (num < 0 || num > n - 1) {
     printf("\033[1;31m\tAquest document no és rellevant!\033[0m\n");
     return;

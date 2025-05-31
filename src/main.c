@@ -20,7 +20,7 @@ int main() {
     return 1;
   }
 
-  //const int totalDocs = 13;
+  // const int totalDocs = 13;
   const int totalDocs = 5401;
   char input[1024];
 
@@ -67,11 +67,9 @@ int main() {
     printf("\n");
 
     if (!result || DocIdList_is_empty(result)) {
-      printf("\033[1;31m\tNo s'ha trobat cap document per la consulta\n\033[0m");
-    } else {
-      int n_resultats = 0;
-      Relevance *top = relevance_score_filtered(g, result, &n_resultats);
-      if (top) {
+      printf("\033[1;31m\tNo s'ha trobat cap document per la
+  consulta\n\033[0m"); } else { int n_resultats = 0; Relevance *top =
+  relevance_score_filtered(g, result, &n_resultats); if (top) {
         print_relevance(top, allDocs, n_resultats);
         select_document(allDocs, top, n_resultats);
         // Alliberem el relevance score
@@ -172,7 +170,8 @@ int main() {
     }
 
     if (!result || DocIdList_is_empty(result)) {
-      printf("\033[1;31m\tNo s'ha trobat cap document per la consulta\n\033[0m");
+      printf(
+          "\033[1;31m\tNo s'ha trobat cap document per la consulta\n\033[0m");
     } else {
       int n_resultats = 0;
       Relevance *top = relevance_score_filtered(g, result, &n_resultats);

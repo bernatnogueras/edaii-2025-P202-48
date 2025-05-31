@@ -108,12 +108,12 @@ Document *document_desserialize(char *path) {
 // Funció que carrega tots els documents d'una carpeta i retorna un array de
 // punters a Document
 Document **loadAllDocuments(void) {
-  //char *folders[] = {"wikipedia12"};
+  // char *folders[] = {"wikipedia12"};
   char *folders[] = {"wikipedia5400"};
-  //int counts[] = {13}; //
+  // int counts[] = {13}; //
   int counts[] = {5401};
   int numFolders = sizeof(counts) / sizeof(counts[0]);
-  //int TOTAL_DOCS = 13;
+  // int TOTAL_DOCS = 13;
   int TOTAL_DOCS = 5401;
 
   // Reservem l'array de punters
