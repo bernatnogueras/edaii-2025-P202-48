@@ -90,10 +90,10 @@ Relevance *relevance_score_filtered(Graph *g, DocIdList *result,
       }
     }
   }
-  if (n > 5){
+  if (n > 5) {
     n = 5;
-  }  
-  
+  }
+
   *num_resultats = n;
   return r;
 }
@@ -124,14 +124,15 @@ void print_relevance(Relevance *top, Document **allDocs, int n) {
 
 // Funció que imprimeix el document seleccionat per l'usuari
 void select_document(Document **allDocs, Relevance *top, int n) {
-  char c;
+  char input[10];
   printf("Selecciona un document (0-%d): ", n - 1);
-  scanf("%c", &c);
-  if (c >= ('0' + n) || c < '0' || c == '\0') {
+
+  if (!fgets(input, sizeof(input), stdin)) {
     printf("\nAquest document no és rellevant!\n");
     return;
   }
-  int num = c - '0';
+
+  int num = input[0] - '0';
   int doc_id = top[num].id;
 
   printf("\nID\n%d\n", allDocs[doc_id]->id);

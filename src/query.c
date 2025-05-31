@@ -158,6 +158,7 @@ void query_queue(Query *q) {
   }
   printf("***** Recent Searches END *****\n");
   printf("\n");
+  printf("Prèm enter per sortir\n");
 }
 
 // Funció que buida la cua de l'historial i allibera la memòria
