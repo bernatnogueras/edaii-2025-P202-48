@@ -111,8 +111,10 @@ void print_relevance(Relevance *top, Document **allDocs, int n) {
 
     printf("(%d) %s\n", i, allDocs[id_doc]->title);
     printf("----\n");
-    char text[150];
+    char text[151];
     strncpy(text, allDocs[id_doc]->body, 150);
+    text[150] = '\0'; // Assignem el caràcter NULL a la posició 150 perquè sinó
+                      // dona error del valgrind
     printf("%s\n", text);
     printf("----\n");
     printf("Relevance score: %d\n", top[i].relevance);
@@ -125,7 +127,7 @@ void print_relevance(Relevance *top, Document **allDocs, int n) {
 // Funció que imprimeix el document seleccionat per l'usuari
 void select_document(Document **allDocs, Relevance *top, int n) {
   int c;
-  printf("Selecciona un document (0-%d): ", n - 1);
+  printf("\033[1;34mSelecciona un document (0-%d):\033[0m ", n - 1);
   c = getchar();
 
   if (c == '\n') {
@@ -138,8 +140,8 @@ void select_document(Document **allDocs, Relevance *top, int n) {
   while ((buf = getchar()) != '\n' && buf != EOF)
     ;
 
-  if (num < 0 || num >= n) {
-    printf("\nAquest document no és rellevant!\n");
+  if (num < 0 || num >= n - 1) {
+    printf("\033[1;31m\tAquest document no és rellevant!\033[0m\n");
     return;
   }
 

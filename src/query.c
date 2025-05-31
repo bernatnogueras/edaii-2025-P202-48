@@ -103,26 +103,15 @@ bool document_matches(const Document *doc, const Query *q) {
 
 // Funció que realitza una cerca lineal per tots els documents i imprimeix els
 // id que coincideixen amb la consulta
-void searchDocumentLineal(Document **allDocs, int totalDocs, const Query *q) {
-  int recompte = 0;
-  int primer = 1; // Creem aquesta variable perquè no s'imprimeixi una , al
-                  // final de l'últim índex
-  printf("Documents que coincideixen amb la consulta:\n\t");
+DocIdList *searchDocumentLineal(Document **allDocs, int totalDocs,
+                                const Query *q) {
+  DocIdList *result = DocIdList_create(); // Crear la llista buida
   for (int i = 0; i < totalDocs; ++i) {
     if (document_matches(allDocs[i], q)) {
-      if (!primer) { // Quan primer no val 1, cosa que vol dir que ja hem imprès
-                     // un índex abans, imprimim la coma
-        printf(", ");
-      }
-      printf("%d", allDocs[i]->id);
-      primer = 0;
-      recompte++;
+      DocIdList_add(result, allDocs[i]->id);
     }
   }
-  if (recompte == 0) {
-    printf("No s'ha trobat cap document per la consulta");
-  }
-  printf("\n");
+  return result;
 }
 
 // Inicialitzem la cua a NULL

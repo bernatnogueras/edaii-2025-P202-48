@@ -25,13 +25,12 @@ int main() {
 
   Graph *g = crear_graph(allDocs, totalDocs);
   omplir_matriu(g);
-  // Relevance *top = relevance_score(g);
 
   /*
   /////////// BÚSQUEDA LINEAL (versió lenta) ///////////
 
   while (1) {
-    printf("Search (lineal): ");
+    printf("\033[1;34mSearch (lineal): \033[0m");
     if (!fgets(input, sizeof(input), stdin)) {
       fprintf(stderr, "Error llegint l'entrada\n");
       break;
@@ -62,16 +61,35 @@ int main() {
       break;
     }
 
-    searchDocumentLineal(allDocs, totalDocs, q);
+    // Fem la cerca lineal i guardem el resultat
+    DocIdList *result = searchDocumentLineal(allDocs, totalDocs, q);
     printf("\n");
+
+    if (!result || DocIdList_is_empty(result)) {
+      printf("\tNo s'ha trobat cap document per la consulta\n");
+    } else {
+      int n_resultats = 0;
+      Relevance *top = relevance_score_filtered(g, result, &n_resultats);
+      if (top) {
+        print_relevance(top, allDocs, n_resultats);
+        select_document(allDocs, top, n_resultats);
+        // Alliberem el relevance score
+        free(top);
+      }
+    }
+
+    printf("\n");
+
+    // Alliberem memòria
+    DocIdList_free(result);
     query_queue(q);
   }
 
   /////////// ACABA VERSIÓ LINEAL ///////////
   */
 
-  /////////// HASHMAP (versió ràpida) ///////////
   ///*
+  /////////// HASHMAP (versió ràpida) ///////////
 
   // Creem un HashMap amb 10.000 compartiments/caselles
   HashMap *reverseIndex = HashMap_create(10000);
@@ -84,7 +102,7 @@ int main() {
   add_words_to_reverse_index(reverseIndex, (void **)allDocs, totalDocs);
 
   while (1) {
-    printf("Search (hashmap): ");
+    printf("\033[1;34mSearch (hashmap): \033[0m");
     if (!fgets(input, sizeof(input), stdin)) {
       fprintf(stderr, "Error llegint l'entrada\n");
       break;
@@ -152,7 +170,6 @@ int main() {
       actual = actual->next;
     }
 
-    //
     if (!result || DocIdList_is_empty(result)) {
       printf("\tNo s'ha trobat cap document per la consulta\n");
     } else {
@@ -165,9 +182,7 @@ int main() {
         free(top);
       }
     }
-
     printf("\n");
-
     // Alliberem memòria
     DocIdList_free(result);
     // Afegim la consulta a la cua circular
