@@ -20,7 +20,7 @@ int main() {
     return 1;
   }
 
-  const int totalDocs = 13;
+  const int totalDocs = 5400;
   char input[1024];
 
   Graph *g = crear_graph(allDocs, totalDocs);
