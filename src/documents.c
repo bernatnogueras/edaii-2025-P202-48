@@ -91,9 +91,6 @@ Document *document_desserialize(char *path) {
   assert(bufferIdx < bufferSize);
   buffer[bufferIdx++] = '\0';
 
-  // char *body = (char *)malloc(sizeof(char) * bufferIdx);
-  // strcpy(body, buffer);
-
   for (int i = 0; buffer[i] != '\0'; i++) {
     buffer[i] = tolower((unsigned char)buffer[i]);
   }
@@ -111,13 +108,13 @@ Document *document_desserialize(char *path) {
 // Funció que carrega tots els documents d'una carpeta i retorna un array de
 // punters a Document
 Document **loadAllDocuments(void) {
-  // char *folders[] = {"wikipedia12"};
+  //char *folders[] = {"wikipedia12"};
   char *folders[] = {"wikipedia5400"};
-  // int counts[] = {13}; //
-  int counts[] = {5400};
+  //int counts[] = {13}; //
+  int counts[] = {5401};
   int numFolders = sizeof(counts) / sizeof(counts[0]);
-  // int TOTAL_DOCS = 13;
-  int TOTAL_DOCS = 5400;
+  //int TOTAL_DOCS = 13;
+  int TOTAL_DOCS = 5401;
 
   // Reservem l'array de punters
   Document **docs = malloc(sizeof(Document *) * TOTAL_DOCS);

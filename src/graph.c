@@ -126,21 +126,19 @@ void print_relevance(Relevance *top, Document **allDocs, int n) {
 
 // Funció que imprimeix el document seleccionat per l'usuari
 void select_document(Document **allDocs, Relevance *top, int n) {
-  int c;
+  char c[16];
   printf("\033[1;34mSelecciona un document (0-%d):\033[0m ", n - 1);
-  c = getchar();
-
-  if (c == '\n') {
+  
+  if(!fgets(c, sizeof(c),stdin)){
     return;
   }
-  int num = c - '0';
-  int buf;
-  // Netegem el buffer d'entrada descartant tots els caràcters fins arribar a
-  // un salt de línia o final de fitxer
-  while ((buf = getchar()) != '\n' && buf != EOF)
-    ;
 
-  if (num < 0 || num >= n - 1) {
+  if (c[0] == '\n') {
+    return;
+  }
+  int num = atoi(c);
+  
+  if (num < 0 || num > n - 1) {
     printf("\033[1;31m\tAquest document no és rellevant!\033[0m\n");
     return;
   }
