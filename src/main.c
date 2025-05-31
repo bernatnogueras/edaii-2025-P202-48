@@ -1,8 +1,8 @@
 #include "docIdList.h"
 #include "documents.h"
+#include "graph.h"
 #include "hashmap.h"
 #include "query.h"
-#include "graph.h"
 #include "sample_lib.h"
 #include <ctype.h>
 #include <dirent.h>
@@ -25,7 +25,7 @@ int main() {
 
   Graph *g = crear_graph(allDocs, totalDocs);
   omplir_matriu(g);
-  int *link_counts = relevance_score(g);
+  // Relevance *top = relevance_score(g);
 
   /*
   /////////// BÚSQUEDA LINEAL (versió lenta) ///////////
@@ -152,13 +152,21 @@ int main() {
       actual = actual->next;
     }
 
-    // Imprimim el resultat
+    //
     if (!result || DocIdList_is_empty(result)) {
       printf("\tNo s'ha trobat cap document per la consulta\n");
     } else {
-      printf("Documents que coincideixen amb la consulta:\n");
-      DocIdList_print(result);
+      int n_resultats = 0;
+      Relevance *top = relevance_score_filtered(g, result, &n_resultats);
+      if (top) {
+        print_relevance(top, allDocs, n_resultats);
+        select_document(allDocs, top, n_resultats);
+        // Alliberem el relevance score
+        free(top);
+      }
     }
+    //
+
     printf("\n");
 
     // Alliberem memòria
@@ -172,10 +180,10 @@ int main() {
   /////////// ACABA VERSIÓ HASHMAP ///////////
   //*/
 
-  // Alliberem el relevance score
-  free(link_counts);
   // Alliberem l'historial de consultes
   query_queue_clear();
+  // Alliberem el Graf
+  free_graph(g);
   // Alliberem tots els documents carregats
   freeAllDocuments(allDocs, totalDocs);
   return 0;

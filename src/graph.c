@@ -1,15 +1,18 @@
+#include "graph.h"
+#include "docIdList.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "graph.h"
 
-Graph *crear_graph(Document **docs_array, int num_docs) {
+// Funció que crea un graf
+Graph *crear_graph(Document **allDocs, int num_docs) {
   Graph *g = (Graph *)malloc(sizeof(Graph));
   g->num_documents = num_docs;
-  g->docs = (Document **)malloc(num_docs * sizeof(Document*));
+  g->docs = (Document **)malloc(num_docs * sizeof(Document *));
 
   // Copiem cada punter
   for (int i = 0; i < num_docs; i++) {
-    g->docs[i] = docs_array[i];
+    g->docs[i] = allDocs[i];
   }
   g->matr = (int **)malloc(num_docs * sizeof(int *));
 
@@ -25,7 +28,7 @@ Graph *crear_graph(Document **docs_array, int num_docs) {
   return g;
 }
 
-
+// Funció que ens permet trobar la posició d'un document
 static int buscar_index(Graph *g, int doc_id) {
   for (int i = 0; i < g->num_documents; i++) {
     if (g->docs[i]->id == doc_id) {
@@ -35,7 +38,7 @@ static int buscar_index(Graph *g, int doc_id) {
   return -1;
 }
 
-
+// Funció que omple la matriu si té connexió
 void omplir_matriu(Graph *g) {
   for (int i = 0; i < g->num_documents; i++) {
     Document *doc = g->docs[i];
@@ -50,23 +53,94 @@ void omplir_matriu(Graph *g) {
   }
 }
 
-
-int *relevance_score(Graph *g) {
-  int n = g->num_documents;
-  int *link_count = malloc(n * sizeof(int));
+// Funció que calcula la rellevància de cada document
+Relevance *relevance_score_filtered(Graph *g, DocIdList *result,
+                                    int *num_resultats) {
+  int n = result->count;
+  Relevance *r = malloc(n * sizeof(Relevance));
+  if (!r) {
+    return NULL;
+  }
 
   // Sumar els 1
   for (int i = 0; i < n; i++) {
     int sum = 0;
-    for (int j = 0; j < n; j++) {
-      sum += g->matr[i][j];
+    int doc_id = result->doc_ids[i];
+    int idx = buscar_index(g, doc_id);
+    if (idx < 0) {
+      r[i].id = doc_id;
+      r[i].relevance = 0;
+      continue;
     }
-    link_count[i] = sum;
+    for (int j = 0; j < g->num_documents; j++) {
+      if (g->matr[j][idx] == 1) {
+        sum++;
+      }
+    }
+    r[i].id = doc_id;
+    r[i].relevance = sum;
   }
-  return link_count;
+  // Ara ordenem els 5 millors
+  for (int i = 0; i < n; ++i) {
+    for (int j = i + 1; j < n; ++j) {
+      if (r[j].relevance > r[i].relevance) {
+        Relevance temp = r[i];
+        r[i] = r[j];
+        r[j] = temp;
+      }
+    }
+  }
+  if (n > 5){
+    n = 5;
+  }  
+  
+  *num_resultats = n;
+  return r;
 }
 
+// Funció que ens imprimeix les 5 millors rellevàncies
+void print_relevance(Relevance *top, Document **allDocs, int n) {
+  int total = 0;
+  printf("\n");
+  for (int i = 0; i < n; ++i) {
+    int id_doc = top[i].id;
+    // Si hi ha menys de 5 elements rellevants, n'imprimim menys
+    if (top[i].relevance == 0) {
+      break;
+    }
 
+    printf("(%d) %s\n", i, allDocs[id_doc]->title);
+    printf("----\n");
+    char text[150];
+    strncpy(text, allDocs[id_doc]->body, 150);
+    printf("%s\n", text);
+    printf("----\n");
+    printf("Relevance score: %d\n", top[i].relevance);
+    printf("\n");
+    total++;
+  }
+  printf("[%d results]\n", total);
+}
+
+// Funció que imprimeix el document seleccionat per l'usuari
+void select_document(Document **allDocs, Relevance *top, int n) {
+  char c;
+  printf("Selecciona un document (0-%d): ", n - 1);
+  scanf("%c", &c);
+  if (c >= ('0' + n) || c < '0' || c == '\0') {
+    printf("\nAquest document no és rellevant!\n");
+    return;
+  }
+  int num = c - '0';
+  int doc_id = top[num].id;
+
+  printf("\nID\n%d\n", allDocs[doc_id]->id);
+  printf("TITLE\n%s\n", allDocs[doc_id]->title);
+  printf("RELEVANCE SCORE\n%d\n", top[num].relevance);
+  printf("BODY\n%s\n", allDocs[doc_id]->body);
+}
+
+// Funció que allibera tota la memòria del graf
 void free_graph(Graph *g) {
   for (int i = 0; i < g->num_documents; i++) {
     free(g->matr[i]);
