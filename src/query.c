@@ -144,21 +144,21 @@ void query_queue(Query *q) {
   // recent
   queue[0] = q;
   count++; // Incrementem el contador
-  printf("******* RECENT SEARCHES *******\n");
+  printf("\033[0;32m******* RECENT SEARCHES *******\033[0m\n");
   for (int i = 0; i < count; ++i) {
-    printf("*\t");
+    printf("\033[0;32m*\033[0m\t");
     for (QueryNode *n = queue[i]->head; n; n = n->next) {
       if (n->exclude) {
-        printf("-%s", n->keyword);
+        printf("\033[1;31m-%s\033[0m", n->keyword);
       } else {
-        printf("%s ", n->keyword);
+        printf("\033[1;33m%s\033[0m  ", n->keyword);
       }
     }
     printf("\n");
   }
-  printf("***** Recent Searches END *****\n");
+  printf("\033[0;32m***** Recent Searches END *****\033[0m\n");
   printf("\n");
-  printf("Prèm enter per sortir\n");
+  printf("Escriu un nou input o prèm enter per sortir\n\n");
 }
 
 // Funció que buida la cua de l'historial i allibera la memòria

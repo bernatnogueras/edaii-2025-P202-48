@@ -124,21 +124,31 @@ void print_relevance(Relevance *top, Document **allDocs, int n) {
 
 // Funció que imprimeix el document seleccionat per l'usuari
 void select_document(Document **allDocs, Relevance *top, int n) {
-  char input[10];
+  int c;
   printf("Selecciona un document (0-%d): ", n - 1);
+  c = getchar();
 
-  if (!fgets(input, sizeof(input), stdin)) {
+  if (c == '\n') {
+    return;
+  }
+  int num = c - '0';
+  int buf;
+  // Netegem el buffer d'entrada descartant tots els caràcters fins arribar a
+  // un salt de línia o final de fitxer
+  while ((buf = getchar()) != '\n' && buf != EOF)
+    ;
+
+  if (num < 0 || num >= n) {
     printf("\nAquest document no és rellevant!\n");
     return;
   }
 
-  int num = input[0] - '0';
   int doc_id = top[num].id;
 
-  printf("\nID\n%d\n", allDocs[doc_id]->id);
-  printf("TITLE\n%s\n", allDocs[doc_id]->title);
-  printf("RELEVANCE SCORE\n%d\n", top[num].relevance);
-  printf("BODY\n%s\n", allDocs[doc_id]->body);
+  printf("\n\033[0;32mID\033[0m\n%d\n", allDocs[doc_id]->id);
+  printf("\033[0;32mTITLE\033[0m\n%s\n", allDocs[doc_id]->title);
+  printf("\033[0;32mRELEVANCE SCORE\033[0m\n%d\n", top[num].relevance);
+  printf("\033[0;32mBODY\033[0m\n%s\n", allDocs[doc_id]->body);
 }
 
 // Funció que allibera tota la memòria del graf
