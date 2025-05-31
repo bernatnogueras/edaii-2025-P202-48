@@ -160,13 +160,12 @@ int main() {
       Relevance *top = relevance_score_filtered(g, result, &n_resultats);
       if (top) {
         print_relevance(top, allDocs, n_resultats);
-        select_document(allDocs, top, n_resultats);
+        select_document(allDocs, top, n_resultats); 
         // Alliberem el relevance score
-        free(top);
+       free(top);
       }
     }
-    //
-
+    
     printf("\n");
 
     // Alliberem memòria
