@@ -1,28 +1,20 @@
-# Report: Building a search engine like Google
+graph TD
 
-# Diagrama del Sistema
+%% Documents
+Document --> document_deserialize
 
-## Documents
-- **Document**
-  - `document_deserialize`
+%% Lineal
+QueryNode --> searchDocumentLineal
+QueryNode --> Query_init
 
-## Lineal
-- **Query Node**
-  - `searchDocumentLineal`
-  - `Query_init`
+%% Hashmap
+DocIdList --> DocIdList_create
+DocIdList --> DocIdList_add
+Hashmap --> DocIdList
+Hashmap --> HashNode
+HashNode --> HashMap_create
+HashNode --> add_words_to_reverse_index
 
-## Hashmap
-- **DocIdList**
-  - `DocIdList_create`
-  - `DocIdList_add`
-- **HashNode**
-- Funcions:
-  - `HashMap_create`
-  - `add_words_to_reverse_index`
-
-## Graph
-- **Graph**
-  - `crear_graph`
-- **Relevance**
-  - `relevance_score_filtered`
-
+%% Graph
+Graph --> crear_graph
+Relevance --> relevance_score_filtered
