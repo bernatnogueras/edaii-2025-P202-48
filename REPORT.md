@@ -36,3 +36,73 @@ System_Boundary(s1, "Cercador de Documents") {
 }
 
 @enduml
+
+
+flowchart TD
+
+    %% Nodo raíz
+    DIAG["Diagrama"] 
+
+    %% Rama Documents
+    DIAG --> DOCUMENTS["Documents"]
+    DOCUMENTS --> DOCUMENT["Document"]
+    DOCUMENT --> FUNC_DESERIALIZE["document.deserialize()"]
+
+    %% Rama Lineal
+    DIAG --> LINEAL["Lineal"]
+    LINEAL --> QNODE["QueryNode"]
+    QNODE --> FUNC_Q_INIT["query.init()"]
+    QNODE --> FUNC_SEARCH_DOC_LINEAL["search.document.lineal()"]
+
+    %% Rama Hashmap
+    DIAG --> HASHMAP["Hashmap"]
+    HASHMAP --> DOCLIST["DocIdList"]
+    DOCLIST --> FUNC_DOCLIST_CREATE["DocIdList.create()"]
+    DOCLIST --> FUNC_DOCLIST_ADD["DocIdList.add()"]
+    HASHMAP --> HASHNODE["HashNode"]
+    HASHNODE --> FUNC_HASHMAP_INIT["HashMap.init()"]
+    HASHNODE --> FUNC_ADD_WORD["add-word-to-reverse-index()"]
+
+    %% Rama Graph
+    DIAG --> GRAPH["Graph"]
+    GRAPH --> GRAPH_NODE["Graph"]
+    GRAPH_NODE --> FUNC_WAR_GRAPH["war-graph()"]
+    GRAPH --> RELEVANCE["Relevance"]
+    RELEVANCE --> FUNC_REL_SCAN["relevance-scan()"]
+    RELEVANCE --> FUNC_FILTERED["filtered()"]
+
+    %% Estilos de colores
+    style DIAG fill:#eeedff,stroke:#333,stroke-width:1px
+
+    style DOCUMENTS fill:#ccffcc,stroke:#333,stroke-width:1px
+    style DOCUMENT fill:#ccffcc,stroke:#333,stroke-width:1px
+    style FUNC_DESERIALIZE fill:#c8a2c8,stroke:#333,stroke-width:1px
+
+    style LINEAL fill:#ccffcc,stroke:#333,stroke-width:1px
+    style QNODE fill:#ccffcc,stroke:#333,stroke-width:1px
+    style FUNC_Q_INIT fill:#c8a2c8,stroke:#333,stroke-width:1px
+    style FUNC_SEARCH_DOC_LINEAL fill:#c8a2c8,stroke:#333,stroke-width:1px
+
+    style HASHMAP fill:#ccffcc,stroke:#333,stroke-width:1px
+    style DOCLIST fill:#ccffcc,stroke:#333,stroke-width:1px
+    style FUNC_DOCLIST_CREATE fill:#c8a2c8,stroke:#333,stroke-width:1px
+    style FUNC_DOCLIST_ADD fill:#c8a2c8,stroke:#333,stroke-width:1px
+    style HASHNODE fill:#ccffcc,stroke:#333,stroke-width:1px
+    style FUNC_HASHMAP_INIT fill:#c8a2c8,stroke:#333,stroke-width:1px
+    style FUNC_ADD_WORD fill:#c8a2c8,stroke:#333,stroke-width:1px
+
+    style GRAPH fill:#ccffcc,stroke:#333,stroke-width:1px
+    style GRAPH_NODE fill:#ccffcc,stroke:#333,stroke-width:1px
+    style FUNC_WAR_GRAPH fill:#c8a2c8,stroke:#333,stroke-width:1px
+    style RELEVANCE fill:#ccffcc,stroke:#333,stroke-width:1px
+    style FUNC_REL_SCAN fill:#c8a2c8,stroke:#333,stroke-width:1px
+    style FUNC_FILTERED fill:#c8a2c8,stroke:#333,stroke-width:1px
+
+    %% Leyenda (opcional)
+    subgraph Leyenda["Leyenda"]
+        green["Componente/ms en memoria"] 
+        purple["Funciones/operaciones"]
+    end
+
+    style green fill:#ccffcc,stroke:#333,stroke-width:1px
+    style purple fill:#c8a2c8,stroke:#333,stroke-width:1px
