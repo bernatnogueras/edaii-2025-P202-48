@@ -111,3 +111,9 @@ A mesura que s’incrementa el nombre de caselles del hashmap, el temps d’inic
 
 **Comentari:**  
 Amb un major nombre de caselles, el temps de cerca decreix ràpidament fins a estabilitzar-se, ja que la probabilitat de col·lisions disminueix i cada accés és més directe. Tanmateix, passat un cert punt, afegir més caselles genera poc guany en velocitat, així que hi ha un punt òptim on el cost de memòria i el rendiment de cerca s’equilibren.
+
+---
+
+## Millora de l’índex invers amb tries per optimitzar cerca i memòria
+
+Una possible millora de l’índex invers per augmentar la velocitat de cerca i inicialització és utilitzar tries (arbres de prefixos) en lloc de hashmaps. Aquesta estructura emmagatzema les paraules compartint els prefixos, fet que pot reduir l’ús de memòria en casos on hi ha moltes paraules similars, tot i que en casos amb paraules molt diferents podria augmentar-lo. La complexitat temporal de cerca és O(L), sent L la longitud de la paraula, i la d'inicialització O(N * L), on N és el nombre de paraules. Tot i que la inicialització pot trigar una mica més, la cerca pot ser significativament més ràpida, especialment quan es treballa amb consultes de prefixos. Aquesta millora pot fer que el sistema sigui més eficient a llarg termini si les cerques són freqüents.
