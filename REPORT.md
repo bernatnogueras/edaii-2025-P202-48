@@ -72,7 +72,7 @@ flowchart TD
     RELEVANCE --> FUNC_FILTERED["filtered()"]
 
     %% Estilos de colores
-    style DIAG fill:#eeedff,stroke:#333,stroke-width:1px
+    style DIAG fill:#228c06,stroke:#333,stroke-width:1px
 
     style DOCUMENTS fill:#ff5733,stroke:#333,stroke-width:1px
     style DOCUMENT fill:#ff5733,stroke:#333,stroke-width:1px
@@ -99,7 +99,7 @@ flowchart TD
     style FUNC_FILTERED fill:#4842ff,stroke:#333,stroke-width:1px
 
     %% Leyenda (opcional)
-    subgraph Leyenda["Leyenda"]
+    subgraph Leyenda["Llegenda"]
         green["Componente/ms en memoria"] 
         purple["Funciones/operaciones"]
     end
