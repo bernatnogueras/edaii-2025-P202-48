@@ -73,15 +73,6 @@ flowchart TD
 ```
 
 
-| Descripció                                         | Big-O    | Justificació                   |
-|----------------------------------------------------|----------|--------------------------------|
-| Anàlisi Document i convertir-lo a estructura       | O(N+L)   | N paraules, L enllaços         |
-| Anàlisi consulta i convertir-la a estructura       | O(K)     | K paraules (query)             |
-| Recompte de veïns dins del graf                     | O(V+E)   | V documents, E enllaços        |
-| Recompte veïns d’un document                       | O(D)     | D enllaços del document        |
-| Cerca documents per paraula                         | O(1)     | Accés hashmap                  |
-| Documents que coincideixin amb totes les paraules   | O(K*M)   | K paraules, M docs màxim per paraules |
-| Ordenar per rellevància                             | O(M log M) |                                |
 
 
 | Descripció                                        | Big-O     | Justificació                         |
@@ -91,5 +82,31 @@ flowchart TD
 | Recompte de veïns dins del graf                   | O(V+E)    | V documents, E enllaços              |
 | Recompte veïns d’un document                      | O(D)      | D enllaços del document              |
 | Cerca documents per paraula                       | O(1)      | Accés hashmap                        |
-| Documents que coincideixin amb totes les paraules | O(K·M)    | K paraules, M docs màxim per paraula |
-| Ordenar per rellevància                           | O(M·logM) | Ordenació clàssica de M elements     |
+| Documents que coincideixin amb totes les paraules | O(K*M)    | K paraules, M docs màxim per paraula |
+| Ordenar per rellevància                           | O(M*logM) | Ordenació clàssica de M elements     |
+
+
+## 1. Temps de cerca amb i sense índex invers
+
+![Gràfic 1: Temps de cerca amb i sense índex invers](attachment:Figure_searching_time_vs_hashmap.png)
+
+**Comentari (2 frases):**  
+La corba sense índex invers creix gairebé linealment a mesura que augmenta el nombre de documents, fet que evidencia que cada cerca recorre tots els elements. En canvi, l’ús de l’índex invers redueix dràsticament el temps a un creixement logarítmic, mostrant una millora substancial en escalabilitat.
+
+---
+
+## 2. Temps d’inicialització per a diferents valors de caselles del hashmap
+
+![Gràfic 2: Temps d’inicialització vs nombre de caselles](attachment:Figure_initialization_time_vs_hashmap.png)
+
+**Comentari (2 frases):**  
+A mesura que s’incrementa el nombre de caselles del hashmap, el temps d’inicialització augmenta de manera directament proporcional, ja que cal reservar i configurar més cel·les en memòria. Això indica que escollir un nombre massa alt de caselles pot disparar el cost inicial sense necessitat real, per la qual cosa convé equilibrar-ho segons la mida esperada del conjunt de dades.
+
+---
+
+## 3. Temps de cerca per a diferents valors de caselles del hashmap
+
+![Gràfic 3: Temps de cerca vs nombre de caselles](attachment:Figure_search_time_vs_dataset.png)
+
+**Comentari (2 frases):**  
+Amb un major nombre de caselles, el temps de cerca decreix ràpidament fins a estabilitzar-se, ja que la probabilitat de col·lisions disminueix i cada accés és més directe. Tanmateix, passat un cert punt, afegir més caselles genera poc guany en velocitat, així que hi ha un punt òptim on el cost de memòria i el rendiment de cerca s’equilibren.
