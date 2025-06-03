@@ -37,7 +37,7 @@ System_Boundary(s1, "Cercador de Documents") {
 
 @enduml
 
-
+```mermaid
 flowchart TD
 
     %% Nodo raíz
