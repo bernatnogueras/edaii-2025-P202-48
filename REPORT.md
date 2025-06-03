@@ -2,6 +2,8 @@
 
 ---
 
+## Esquema funcional del codi
+
 ```mermaid
 flowchart TD
 
@@ -74,6 +76,8 @@ flowchart TD
 ```
 
 ---
+
+## Complexitat temporal de les operacions principals del sistema de cerca
 
 | Descripció                                        | Big-O     | Justificació                         |
 | ------------------------------------------------- | --------- | ------------------------------------ |
