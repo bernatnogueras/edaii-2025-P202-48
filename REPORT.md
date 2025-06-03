@@ -70,6 +70,7 @@ flowchart TD
 
     style green fill:#ff5733,stroke:#333,stroke-width:1px
     style purple fill:#4842ff,stroke:#333,stroke-width:1px
+```
 
 
 | Descripció                                         | Big-O    | Justificació                   |
@@ -81,3 +82,14 @@ flowchart TD
 | Cerca documents per paraula                         | O(1)     | Accés hashmap                  |
 | Documents que coincideixin amb totes les paraules   | O(K*M)   | K paraules, M docs màxim per paraules |
 | Ordenar per rellevància                             | O(M log M) |                                |
+
+
+| Descripció                                        | Big-O     | Justificació                         |
+| ------------------------------------------------- | --------- | ------------------------------------ |
+| Anàlisi Document i convertir-lo a estructura      | O(N+L)    | N paraules, L enllaços               |
+| Anàlisi consulta i convertir-la a estructura      | O(K)      | K paraules (query)                   |
+| Recompte de veïns dins del graf                   | O(V+E)    | V documents, E enllaços              |
+| Recompte veïns d’un document                      | O(D)      | D enllaços del document              |
+| Cerca documents per paraula                       | O(1)      | Accés hashmap                        |
+| Documents que coincideixin amb totes les paraules | O(K·M)    | K paraules, M docs màxim per paraula |
+| Ordenar per rellevància                           | O(M·logM) | Ordenació clàssica de M elements     |
