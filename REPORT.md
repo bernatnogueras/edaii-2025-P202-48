@@ -74,29 +74,29 @@ flowchart TD
     %% Estilos de colores
     style DIAG fill:#eeedff,stroke:#333,stroke-width:1px
 
-    style DOCUMENTS fill:#ccffcc,stroke:#333,stroke-width:1px
-    style DOCUMENT fill:#ccffcc,stroke:#333,stroke-width:1px
-    style FUNC_DESERIALIZE fill:#c8a2c8,stroke:#333,stroke-width:1px
+    style DOCUMENTS fill:#ff5733,stroke:#333,stroke-width:1px
+    style DOCUMENT fill:#ff5733,stroke:#333,stroke-width:1px
+    style FUNC_DESERIALIZE fill:#4842ff,stroke:#333,stroke-width:1px
 
-    style LINEAL fill:#ccffcc,stroke:#333,stroke-width:1px
-    style QNODE fill:#ccffcc,stroke:#333,stroke-width:1px
-    style FUNC_Q_INIT fill:#c8a2c8,stroke:#333,stroke-width:1px
-    style FUNC_SEARCH_DOC_LINEAL fill:#c8a2c8,stroke:#333,stroke-width:1px
+    style LINEAL fill:#ff5733,stroke:#333,stroke-width:1px
+    style QNODE fill:#ff5733,stroke:#333,stroke-width:1px
+    style FUNC_Q_INIT fill:#4842ff,stroke:#333,stroke-width:1px
+    style FUNC_SEARCH_DOC_LINEAL fill:#4842ff,stroke:#333,stroke-width:1px
 
-    style HASHMAP fill:#ccffcc,stroke:#333,stroke-width:1px
-    style DOCLIST fill:#ccffcc,stroke:#333,stroke-width:1px
-    style FUNC_DOCLIST_CREATE fill:#c8a2c8,stroke:#333,stroke-width:1px
-    style FUNC_DOCLIST_ADD fill:#c8a2c8,stroke:#333,stroke-width:1px
-    style HASHNODE fill:#ccffcc,stroke:#333,stroke-width:1px
-    style FUNC_HASHMAP_INIT fill:#c8a2c8,stroke:#333,stroke-width:1px
-    style FUNC_ADD_WORD fill:#c8a2c8,stroke:#333,stroke-width:1px
+    style HASHMAP fill:#ff5733,stroke:#333,stroke-width:1px
+    style DOCLIST fill:#ff5733,stroke:#333,stroke-width:1px
+    style FUNC_DOCLIST_CREATE fill:#4842ff,stroke:#333,stroke-width:1px
+    style FUNC_DOCLIST_ADD fill:#4842ff,stroke:#333,stroke-width:1px
+    style HASHNODE fill:#ff5733,stroke:#333,stroke-width:1px
+    style FUNC_HASHMAP_INIT fill:#4842ff,stroke:#333,stroke-width:1px
+    style FUNC_ADD_WORD fill:#4842ff,stroke:#333,stroke-width:1px
 
-    style GRAPH fill:#ccffcc,stroke:#333,stroke-width:1px
-    style GRAPH_NODE fill:#ccffcc,stroke:#333,stroke-width:1px
-    style FUNC_WAR_GRAPH fill:#c8a2c8,stroke:#333,stroke-width:1px
-    style RELEVANCE fill:#ccffcc,stroke:#333,stroke-width:1px
-    style FUNC_REL_SCAN fill:#c8a2c8,stroke:#333,stroke-width:1px
-    style FUNC_FILTERED fill:#c8a2c8,stroke:#333,stroke-width:1px
+    style GRAPH fill:#ff5733,stroke:#333,stroke-width:1px
+    style GRAPH_NODE fill:#ff5733,stroke:#333,stroke-width:1px
+    style FUNC_WAR_GRAPH fill:#4842ff,stroke:#333,stroke-width:1px
+    style RELEVANCE fill:#ff5733,stroke:#333,stroke-width:1px
+    style FUNC_REL_SCAN fill:#4842ff,stroke:#333,stroke-width:1px
+    style FUNC_FILTERED fill:#4842ff,stroke:#333,stroke-width:1px
 
     %% Leyenda (opcional)
     subgraph Leyenda["Leyenda"]
@@ -104,5 +104,5 @@ flowchart TD
         purple["Funciones/operaciones"]
     end
 
-    style green fill:#ccffcc,stroke:#333,stroke-width:1px
-    style purple fill:#c8a2c8,stroke:#333,stroke-width:1px
+    style green fill:#ff5733,stroke:#333,stroke-width:1px
+    style purple fill:#4842ff,stroke:#333,stroke-width:1px
