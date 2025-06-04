@@ -76,6 +76,7 @@ flowchart TD
 ```
 **Quina és l'estructura del diagrama?**  
 L'estructura que hem decidit implementar ha estat separar el diagrama per les 4 coses que considerem més importants del nostre codi, les quals són els documents, la cerca lineal, el Hashmap i el Graf. Un cop amb això, hem afegit la principal o principals estructures d'aquesta part i després les principals funcions d'aquestes parts respectives també.
+
 ---
 
 ## Complexitat temporal de les operacions principals del sistema de cerca
