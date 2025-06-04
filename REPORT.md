@@ -40,37 +40,39 @@ flowchart TD
     %% Estilos de colores
     style DIAG fill:#228c06,stroke:#333,stroke-width:1px
 
-    style DOCUMENTS fill:#ff5733,stroke:#333,stroke-width:1px
-    style DOCUMENT fill:#ff5733,stroke:#333,stroke-width:1px
+    style DOCUMENTS fill:#228c06,stroke:#333,stroke-width:1px
+    style DOCUMENT fill:#4842ff,stroke:#333,stroke-width:1px
     style FUNC_DESERIALIZE fill:#4842ff,stroke:#333,stroke-width:1px
 
-    style LINEAL fill:#ff5733,stroke:#333,stroke-width:1px
+    style LINEAL fill:#228c06,stroke:#333,stroke-width:1px
     style QNODE fill:#ff5733,stroke:#333,stroke-width:1px
-    style FUNC_Q_INIT fill:#4842ff,stroke:#333,stroke-width:1px
-    style FUNC_SEARCH_DOC_LINEAL fill:#4842ff,stroke:#333,stroke-width:1px
+    style FUNC_Q_INIT fill:#ff5733,stroke:#333,stroke-width:1px
+    style FUNC_SEARCH_DOC_LINEAL fill:#ff5733,stroke:#333,stroke-width:1px
 
-    style HASHMAP fill:#ff5733,stroke:#333,stroke-width:1px
+    style HASHMAP fill:#228c06,stroke:#333,stroke-width:1px
     style DOCLIST fill:#ff5733,stroke:#333,stroke-width:1px
-    style FUNC_DOCLIST_CREATE fill:#4842ff,stroke:#333,stroke-width:1px
-    style FUNC_DOCLIST_ADD fill:#4842ff,stroke:#333,stroke-width:1px
+    style FUNC_DOCLIST_CREATE fill:#ff5733,stroke:#333,stroke-width:1px
+    style FUNC_DOCLIST_ADD fill:#ff5733,stroke:#333,stroke-width:1px
     style HASHNODE fill:#ff5733,stroke:#333,stroke-width:1px
-    style FUNC_HASHMAP_INIT fill:#4842ff,stroke:#333,stroke-width:1px
-    style FUNC_ADD_WORD fill:#4842ff,stroke:#333,stroke-width:1px
+    style FUNC_HASHMAP_INIT fill:#ff5733,stroke:#333,stroke-width:1px
+    style FUNC_ADD_WORD fill:#ff5733,stroke:#333,stroke-width:1px
 
-    style GRAPH fill:#ff5733,stroke:#333,stroke-width:1px
+    style GRAPH fill:#228c06,stroke:#333,stroke-width:1px
     style GRAPH_NODE fill:#ff5733,stroke:#333,stroke-width:1px
-    style FUNC_WAR_GRAPH fill:#4842ff,stroke:#333,stroke-width:1px
+    style FUNC_WAR_GRAPH fill:#ff5733,stroke:#333,stroke-width:1px
     style RELEVANCE fill:#ff5733,stroke:#333,stroke-width:1px
-    style FUNC_REL_SCAN fill:#4842ff,stroke:#333,stroke-width:1px
+    style FUNC_REL_SCAN fill:#ff5733,stroke:#333,stroke-width:1px
 
     %% Leyenda (opcional)
     subgraph Leyenda["Llegenda"]
-        green["Component/ms en memòria"] 
-        purple["Funcions/operacions"]
+        green["Components volàtils"] 
+        purple["Components persistents"]
+        red["Títols"]
     end
 
     style green fill:#ff5733,stroke:#333,stroke-width:1px
     style purple fill:#4842ff,stroke:#333,stroke-width:1px
+    style red fill:#228c06,stroke:#333,stroke-width:1px
 ```
 
 ---
@@ -91,7 +93,7 @@ flowchart TD
 
 ## 1. Temps de cerca amb i sense índex invers
 
-### [Gràfic 1: Temps de cerca amb i sense índex invers](https://drive.google.com/file/d/1763U6HoVCoyNuLrC_LdDi5B9crxaqGeW/view?usp=sharing)
+![Gràfic 1: Temps de cerca amb i sense índex invers](https://drive.google.com/file/d/1763U6HoVCoyNuLrC_LdDi5B9crxaqGeW/view?usp=sharing)
 
 **Comentari:**  
 La corba sense índex invers creix gairebé linealment a mesura que augmenta el nombre de documents, fet que evidencia que cada cerca recorre tots els elements. En canvi, l’ús de l’índex invers redueix dràsticament el temps a un creixement logarítmic, mostrant una millora substancial en escalabilitat.
@@ -100,7 +102,7 @@ La corba sense índex invers creix gairebé linealment a mesura que augmenta el 
 
 ## 2. Temps d’inicialització per a diferents valors de caselles del hashmap
 
-### [Gràfic 2: Temps d’inicialització vs nombre de caselles](https://drive.google.com/file/d/1Uq0PIfA-WeEWsmrK-0fmspIkbj63-k9m/view?usp=sharing)
+![Gràfic 2: Temps d’inicialització vs nombre de caselles](https://drive.google.com/file/d/1Uq0PIfA-WeEWsmrK-0fmspIkbj63-k9m/view?usp=sharing)
 
 **Comentari:**  
 A mesura que s’incrementa el nombre de caselles del hashmap, el temps d’inicialització augmenta de manera directament proporcional, ja que cal reservar i configurar més cel·les en memòria. Això indica que escollir un nombre massa alt de caselles pot disparar el cost inicial sense necessitat real, per la qual cosa convé equilibrar-ho segons la mida esperada del conjunt de dades.
@@ -109,7 +111,7 @@ A mesura que s’incrementa el nombre de caselles del hashmap, el temps d’inic
 
 ## 3. Temps de cerca per a diferents valors de caselles del hashmap
 
-### [Gràfic 3: Temps de cerca vs nombre de caselles](https://drive.google.com/file/d/14n6KzVUOCBCzH5dWsj4btb2T-Sks2eVh/view?usp=sharing)
+![Gràfic 3: Temps de cerca vs nombre de caselles](https://drive.google.com/file/d/14n6KzVUOCBCzH5dWsj4btb2T-Sks2eVh/view?usp=sharing)
 
 **Comentari:**  
 Amb un major nombre de caselles, el temps de cerca decreix ràpidament fins a estabilitzar-se, ja que la probabilitat de col·lisions disminueix i cada accés és més directe. Tanmateix, passat un cert punt, afegir més caselles genera poc guany en velocitat, així que hi ha un punt òptim on el cost de memòria i el rendiment de cerca s’equilibren.
