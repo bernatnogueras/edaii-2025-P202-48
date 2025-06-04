@@ -13,30 +13,29 @@ flowchart TD
     %% Rama Documents
     DIAG --> DOCUMENTS["Documents"]
     DOCUMENTS --> DOCUMENT["Document"]
-    DOCUMENT --> FUNC_DESERIALIZE["document.deserialize()"]
+    DOCUMENT --> FUNC_DESERIALIZE["document_desserialize()"]
 
     %% Rama Lineal
     DIAG --> LINEAL["Lineal"]
     LINEAL --> QNODE["QueryNode"]
-    QNODE --> FUNC_Q_INIT["query.init()"]
-    QNODE --> FUNC_SEARCH_DOC_LINEAL["search.document.lineal()"]
+    QNODE --> FUNC_Q_INIT["Query_init()"]
+    QNODE --> FUNC_SEARCH_DOC_LINEAL["searchDocumentLineal()"]
 
     %% Rama Hashmap
     DIAG --> HASHMAP["Hashmap"]
     HASHMAP --> DOCLIST["DocIdList"]
-    DOCLIST --> FUNC_DOCLIST_CREATE["DocIdList.create()"]
-    DOCLIST --> FUNC_DOCLIST_ADD["DocIdList.add()"]
+    DOCLIST --> FUNC_DOCLIST_CREATE["DocIdList_create()"]
+    DOCLIST --> FUNC_DOCLIST_ADD["DocIdList_add()"]
     HASHMAP --> HASHNODE["HashNode"]
-    HASHNODE --> FUNC_HASHMAP_INIT["HashMap.init()"]
-    HASHNODE --> FUNC_ADD_WORD["add-word-to-reverse-index()"]
+    HASHNODE --> FUNC_HASHMAP_INIT["HashMap_create()"]
+    HASHNODE --> FUNC_ADD_WORD["add_words_to_reverse_index()"]
 
     %% Rama Graph
     DIAG --> GRAPH["Graph"]
     GRAPH --> GRAPH_NODE["Graph"]
-    GRAPH_NODE --> FUNC_WAR_GRAPH["war-graph()"]
+    GRAPH_NODE --> FUNC_WAR_GRAPH["crear_graph()"]
     GRAPH --> RELEVANCE["Relevance"]
-    RELEVANCE --> FUNC_REL_SCAN["relevance-scan()"]
-    RELEVANCE --> FUNC_FILTERED["filtered()"]
+    RELEVANCE --> FUNC_REL_SCAN["relevance_score_filtered()"]
 
     %% Estilos de colores
     style DIAG fill:#228c06,stroke:#333,stroke-width:1px
