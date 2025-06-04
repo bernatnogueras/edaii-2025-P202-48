@@ -13,7 +13,7 @@ flowchart TD
     %% Rama Documents
     DIAG --> DOCUMENTS["Documents"]
     DOCUMENTS --> DOCUMENT["Document"]
-    DOCUMENT --> FUNC_DESERIALIZE["document.desserialize()"]
+    DOCUMENT --> FUNC_DESERIALIZE["document_desserialize()"]
 
     %% Rama Lineal
     DIAG --> LINEAL["Lineal"]
@@ -62,7 +62,6 @@ flowchart TD
     style FUNC_WAR_GRAPH fill:#4842ff,stroke:#333,stroke-width:1px
     style RELEVANCE fill:#ff5733,stroke:#333,stroke-width:1px
     style FUNC_REL_SCAN fill:#4842ff,stroke:#333,stroke-width:1px
-    style FUNC_FILTERED fill:#4842ff,stroke:#333,stroke-width:1px
 
     %% Leyenda (opcional)
     subgraph Leyenda["Llegenda"]
