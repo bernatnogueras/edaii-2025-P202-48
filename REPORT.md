@@ -83,9 +83,9 @@ flowchart TD
 | Anàlisi consulta i convertir-la a estructura      | O(K)      | Depèn del nombre de paraules (K) de la consulta                   |
 | Recompte de veïns dins del graf                   | O(V+E)    | Depèn de tots els vèrtexs (V) del graf, que representen els documents, i de totes les arestes (E), que representen els links             |
 | Recompte veïns d’un document                      | O(D)      | Depèn del nombre d'enllaços/grau (D) que tingui aquell document              |
-| Cerca documents per paraula                       | O(1)      | Amb el Hashmap, ens permet tenir una complexitat de O(1)                        |
+| Cerca documents per paraula                       | O(1)      | El Hashmap ens permet tenir una complexitat de O(1)                        |
 | Documents que coincideixin amb totes les paraules | O(K*M)    | Depèn del nombre de paraules (K) de la consulta i de la llista més gran (M) entre els documents que contenen aquestes paraules|
-| Ordenar per rellevància                           | O(N^2) | ordenació mitjançant BubbleSort     |
+| Ordenar per rellevància                           | O(N^2) | Ordenació mitjançant BubbleSort     |
 
 ---
 
