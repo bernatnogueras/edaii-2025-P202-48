@@ -93,8 +93,7 @@ flowchart TD
 
 ## 1. Temps de cerca amb i sense índex invers
 
-![Gràfic 1: Temps de cerca amb i sense índex invers](https://drive.google.com/file/d/1763U6HoVCoyNuLrC_LdDi5B9crxaqGeW/view?usp=sharing)
-![Gràfic 1: Temps de cerca amb i sense índex invers](https://drive.google.com/uc?export=view&id=1763U6HoVCoyNuLrC_LdDi5B9crxaqGeW)
+![Gràfic 1: Temps de cerca amb i sense índex invers](https://drive.google.com/uc?export=view&id=1-nnZxgWzq5M7Nnk1mxhtrkh_kmYcjx4M)
 
 **Comentari:**  
 La corba sense índex invers creix gairebé linealment a mesura que augmenta el nombre de documents, fet que evidencia que cada cerca recorre tots els elements. En canvi, l’ús de l’índex invers redueix dràsticament el temps a un creixement logarítmic, mostrant una millora substancial en escalabilitat.
@@ -103,7 +102,7 @@ La corba sense índex invers creix gairebé linealment a mesura que augmenta el 
 
 ## 2. Temps d’inicialització per a diferents valors de caselles del hashmap
 
-![Gràfic 2: Temps d’inicialització vs nombre de caselles](https://drive.google.com/file/d/1Uq0PIfA-WeEWsmrK-0fmspIkbj63-k9m/view?usp=sharing)
+![Gràfic 2: Temps d’inicialització vs nombre de caselles](https://drive.google.com/uc?export=view&id=180XVHp-k4Zo1ieeMaP5tSrmLf6hvqEh5)
 
 **Comentari:**  
 A mesura que s’incrementa el nombre de caselles del hashmap, el temps d’inicialització augmenta de manera directament proporcional, ja que cal reservar i configurar més cel·les en memòria. Això indica que escollir un nombre massa alt de caselles pot disparar el cost inicial sense necessitat real, per la qual cosa convé equilibrar-ho segons la mida esperada del conjunt de dades.
@@ -112,7 +111,7 @@ A mesura que s’incrementa el nombre de caselles del hashmap, el temps d’inic
 
 ## 3. Temps de cerca per a diferents valors de caselles del hashmap
 
-![Gràfic 3: Temps de cerca vs nombre de caselles](https://drive.google.com/file/d/14n6KzVUOCBCzH5dWsj4btb2T-Sks2eVh/view?usp=sharing)
+![Gràfic 3: Temps de cerca vs nombre de caselles](https://drive.google.com/uc?export=view&id=12AeehTUgt93_NVf81s77DF1RrtJEpMoU)
 
 **Comentari:**  
 Amb un major nombre de caselles, el temps de cerca decreix ràpidament fins a estabilitzar-se, ja que la probabilitat de col·lisions disminueix i cada accés és més directe. Tanmateix, passat un cert punt, afegir més caselles genera poc guany en velocitat, així que hi ha un punt òptim on el cost de memòria i el rendiment de cerca s’equilibren.
