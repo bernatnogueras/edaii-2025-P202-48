@@ -94,6 +94,7 @@ flowchart TD
 ## 1. Temps de cerca amb i sense índex invers
 
 ![Gràfic 1: Temps de cerca amb i sense índex invers](https://drive.google.com/file/d/1763U6HoVCoyNuLrC_LdDi5B9crxaqGeW/view?usp=sharing)
+![Gràfic 1: Temps de cerca amb i sense índex invers](https://drive.google.com/uc?export=view&id=1763U6HoVCoyNuLrC_LdDi5B9crxaqGeW)
 
 **Comentari:**  
 La corba sense índex invers creix gairebé linealment a mesura que augmenta el nombre de documents, fet que evidencia que cada cerca recorre tots els elements. En canvi, l’ús de l’índex invers redueix dràsticament el temps a un creixement logarítmic, mostrant una millora substancial en escalabilitat.
