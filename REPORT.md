@@ -74,7 +74,8 @@ flowchart TD
     style purple fill:#4842ff,stroke:#333,stroke-width:1px
     style red fill:#228c06,stroke:#333,stroke-width:1px
 ```
-
+**Quina és l'estructura del diagrama?**  
+L'estructura que hem decidit implementar ha estat separar el diagrama per les 4 coses que considerem més importants del nostre codi, les quals són els documents, la cerca lineal, el Hashmap i el Graf. Un cop amb això, hem afegit la principal o principals estructures d'aquesta part i després les principals funcions d'aquestes parts respectives també.
 ---
 
 ## Complexitat temporal de les operacions principals del sistema de cerca
@@ -127,6 +128,7 @@ Per tant, trigaria menys temps a executar-se, ja que no tornaria a processar tot
 
 Per millorar la velocitat de cerca el que podríem implementar és una funció que ordenés les llistes de documents per la freqüència de les paraules en ordre creixent abans de fer la intersecció, ja que així estem limitant el nombre d’elements a comparar, cosa que provocarà que la intersecció sigui més ràpida. (Exemple→ Si estem buscant 'the cat', començarem buscant 'cat', ja que apareix a menys documents i, per tant, si no està 'cat', ja no caldrà buscar 'the', que segurament estava als 5400 documents).  
 El fet d’ordenar les llistes per freqüència ocuparia lleugerament una mica més memòria addicional.  
-Aquest canvi fa que la complexitat passi de O(K * M), on K és el nombre de paraules i M la mida màxima de les llistes, a O(K * M log(M)) a causa del procés d’ordenació. Tot i això, la intersecció següent serà molt més eficient, ja que es compararan menys elements, la qual cosa reduirà el temps total de cerca. Resumint, encara que l’ordenació afegeixi un cost inicial, el temps global serà menor pel fet que la cerca serà més ràpida i optimitzada.
+Aquest canvi fa que la complexitat passi de O(K * M), on K és el nombre de paraules i M la mida màxima de les llistes, a O(K * M log(M)) a causa del procés d’ordenació. Tot i això, la intersecció següent serà molt més eficient, ja que es compararan menys elements, la qual cosa reduirà el temps total de cerca.  
+Resumint, encara que l’ordenació afegeixi un cost inicial, el temps global serà menor pel fet que la cerca serà més ràpida i optimitzada.
 
 Una altra millora que podríem implementar seria utilitzar MergeSort en comptes de BubbleSort a l’hora d’ordenar les rellevàncies, ja que la seva complexitat es reduiria de O(n^2) a O(n log(n)).
