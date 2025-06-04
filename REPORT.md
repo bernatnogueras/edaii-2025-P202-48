@@ -95,7 +95,7 @@ L'estructura que hem decidit implementar ha estat separar el diagrama per les 4 
 
 ## 1. Temps de cerca amb i sense índex invers
 
-![Gràfic 1: Temps de cerca amb i sense índex invers](https://drive.google.com/uc?export=view&id=1-nnZxgWzq5M7Nnk1mxhtrkh_kmYcjx4M)
+![Gràfic 1: Temps de cerca amb i sense índex invers](https://drive.google.com/uc?export=download&id=1UxQ3xEp6wOarnxyVjzkYN_T2ZsHgyAcD)
 
 **Comentari:**  
 Podem observar com amb la cerca sense índex invers augmenta gairebé de forma lineal amb el temps, fet que provoca que a major nombre de documents, trigui major temps. En canvi, podem observar com l’ús de cerca amb índex invers permet una cerca logarítmica (log(n)), però que podem observar que com amb més documents, el temps de cerca cada vegada es torna més constant.
