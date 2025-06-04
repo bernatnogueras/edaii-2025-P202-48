@@ -79,7 +79,7 @@ flowchart TD
 
 | Descripció                                        | Big-O     | Justificació                         |
 | ------------------------------------------------- | --------- | ------------------------------------ |
-| Anàlisi Document i convertir-lo a estructura      | O(N+L)    | N paraules, L enllaços               |
+| Anàlisi Document i convertir-lo a estructura      | O(N+L)    | Depèn del nombre de paraules del document (N) i del seu nombre d'enllaços (L)                |
 | Anàlisi consulta i convertir-la a estructura      | O(K)      | K paraules (query)                   |
 | Recompte de veïns dins del graf                   | O(V+E)    | V documents, E enllaços              |
 | Recompte veïns d’un document                      | O(D)      | D enllaços del document              |
